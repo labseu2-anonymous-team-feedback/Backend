@@ -1,0 +1,42 @@
+{
+  "name": "Backend",
+  "version": "1.0.0",
+  "description": "## Anonymous feedback Apploication",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/labseu2-anonymous-team-feedback/Backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/labseu2-anonymous-team-feedback/Backend/issues"
+  },
+  "homepage": "https://github.com/labseu2-anonymous-team-feedback/Backend#readme",
+  "dependencies": {
+    "apollo-datasource": "^0.6.1",
+    "apollo-server-express": "^2.8.1",
+    "auto-bind": "^2.1.0",
+    "bcrypt": "^3.0.6",
+    "cors": "^2.8.5",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "graphql": "^14.4.2",
+    "helmet": "^3.20.0",
+    "jsonwebtoken": "^8.5.1",
+    "merge-graphql-schemas": "^1.7.0",
+    "pg": "^7.12.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.15.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.2.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "nodemon": "^1.19.1"
+  }
+}
