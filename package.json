@@ -4,6 +4,8 @@
   "description": "## Anonymous feedback Apploication",
   "main": "index.js",
   "scripts": {
+    "migrate": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate",
+    "seed": "npx sequelize-cli db:seed:undo:all && npx sequelize-cli db:seed:all",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

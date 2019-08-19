@@ -4,15 +4,14 @@ module.exports = {
     return queryInterface.createTable('Surveys', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
       },
       title: {
         type: Sequelize.STRING,
       },
       userId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
       },
       closed: {
         type: Sequelize.BOOLEAN,
