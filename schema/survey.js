@@ -9,6 +9,15 @@ type Survey {
     title: String!
     owner: User!
 }
+
+type Mutation {
+    createNewSurvey(
+    title: String
+    userId: String!
+    )
+}
+
+
 `;
 
 module.exports = surveyTypes;

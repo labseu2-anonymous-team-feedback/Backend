@@ -5,7 +5,20 @@ module.exports = {
       return surveys;
     },
   },
+
+  Mutation: {
+    async createNewSurvey(_, { title, userId }, { models }) {
+      return models.Survey({
+        title,
+        userId,
+      });
+    },
+  },
+
   Survey: {
+    surveys(survey) {
+      return survey.getSurveys();
+    },
     owner(survey) {
       return survey.getOwner();
     },
