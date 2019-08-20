@@ -7,18 +7,16 @@ module.exports = {
   },
 
   Mutation: {
-    async createNewSurvey(root, args, { title, userId }, { models }) {
+    async createNewSurvey(root, args, { models }) {
+      console.log(models);
       return models.Survey.create({
-        title,
-        userId,
+        title: args.title,
+        userId: args.userId,
       });
     },
   },
 
   Survey: {
-    surveys(survey) {
-      return survey.getSurveys();
-    },
     owner(survey) {
       return survey.getOwner();
     },
