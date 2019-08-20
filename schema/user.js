@@ -14,6 +14,7 @@ type User {
 }
 
 type Mutation {
+<<<<<<< HEAD
     userLogin(email: String!, password: String!): LoginResponse
     createAccount(
     username: String!
@@ -29,6 +30,14 @@ type LoginResponse {
     email: String
     token: String
   }
+=======
+    createAccount(
+    username: String
+    email: String!
+    password: String!
+): createAccountResponse
+}
+>>>>>>> Implement User Datasource
 type createAccountResponse {
     id: String
     username: String
