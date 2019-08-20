@@ -8,7 +8,7 @@ module.exports = {
 
   Mutation: {
     async createNewSurvey(root, args, { title, userId }, { models }) {
-      return models.Survey({
+      return models.Survey.create({
         title,
         userId,
       });
