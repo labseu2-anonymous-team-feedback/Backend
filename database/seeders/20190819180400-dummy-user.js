@@ -1,4 +1,5 @@
-const mockUsers = require('../mock/user.mock')
+const mockUsers = require('../mock/user.mock');
+
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.bulkInsert('Users', mockUsers, {}),
 

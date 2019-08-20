@@ -78,4 +78,12 @@ module.exports = [
     password: '$2y$12$KOyzmBBn2ADOgvQ5RbNlwelqbrGcqQ45KbZYhcNU1b6ZA0dhCZGum',
     createdAt: new Date(),
     updatedAt: new Date(),
-  }];
+  },
+  // {
+  //   username: 'Pascal Ulor',
+  //   email: 'pascal@.com.au',
+  //   password: '$2y$12$KOyzmBBn2ADOgvQ5RbNlwelqbrGcqQ45KbZYhcNU1b6ZA0dhCZGum',
+  //   createdAt: new Date(),
+  //   updatedAt: new Date(),
+  // },
+];

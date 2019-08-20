@@ -1,11 +1,12 @@
+// const uuid = require('uuid/v4');
 
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.createTable('Users', {
     id: {
       allowNull: false,
-      autoIncrement: false,
       primaryKey: true,
       type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
     },
     email: {
       type: Sequelize.STRING,
@@ -30,5 +31,6 @@ module.exports = {
       type: Sequelize.DATE,
     },
   }),
+  // eslint-disable-next-line no-unused-vars
   down: (queryInterface, Sequelize) => queryInterface.dropTable('Users'),
 };

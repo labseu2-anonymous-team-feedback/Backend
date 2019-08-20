@@ -4,6 +4,8 @@
   "description": "## Anonymous feedback Apploication",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "migrate": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate",
     "seed": "npx sequelize-cli db:seed:undo:all && npx sequelize-cli db:seed:all",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -33,7 +35,8 @@
     "merge-graphql-schemas": "^1.7.0",
     "pg": "^7.12.1",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^5.15.1"
+    "sequelize": "^5.15.1",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "eslint": "^6.2.0",
