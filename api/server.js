@@ -7,6 +7,7 @@ const models = require('../database/models');
 const app = express();
 const context = { models };
 
+
 const server = new ApolloServer({
   typeDefs, resolvers, context,
 });
