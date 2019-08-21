@@ -11,7 +11,7 @@ const surveyTypes = gql`
   }
 
   type Mutation {
-    createNewSurvey(title: String, userId: String!): Survey
+    createNewSurvey(title: String!): Survey
   }
 `;
 

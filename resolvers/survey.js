@@ -14,7 +14,7 @@ module.exports = {
       if (!user) {
         throw new Error('Unauthorized Request, you must log in to create a survey');
       }
-      return Survey.createSurvey(args);
+      return Survey.createSurvey({ title: args.title, userId: user.id });
     },
   },
   Survey: {
