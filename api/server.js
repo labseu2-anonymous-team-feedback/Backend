@@ -3,13 +3,13 @@ const { ApolloServer } = require('apollo-server-express');
 const typeDefs = require('../schema');
 const resolvers = require('../resolvers');
 const models = require('../database/models');
-const LoginAPI = require('../data/user');
+const UserAPI = require('../datasources/user');
 
 
 const app = express();
 
 const dataSources = () => ({
-  User: new LoginAPI(),
+  User: new UserAPI(),
 });
 
 const context = { models };

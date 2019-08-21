@@ -1,7 +1,8 @@
 const { DataSource } = require('apollo-datasource');
 const autoBind = require('auto-bind');
 const bcrypt = require('bcrypt');
-const createToken = require('../helpers/token');
+const { createToken } = require('../helpers/token');
+const { generateHash } = require('../helpers/hash');
 
 class User extends DataSource {
   constructor() {
@@ -11,6 +12,15 @@ class User extends DataSource {
 
   initialize({ context }) {
     this.models = context.models;
+  }
+
+  async createAccount(userData) {
+    const hashedPassword = generateHash(userData.password);
+    const user = this.models.User.create({
+      ...userData,
+      password: hashedPassword,
+    });
+    return user;
   }
 
   async userLogin(credentials) {
@@ -23,7 +33,7 @@ class User extends DataSource {
       if (checkPassword) {
         const token = createToken(user);
         return {
-          id: user.id, email: user.email, usernname: user.username, token,
+          id: user.id, email: user.email, username: user.username, token,
         };
       }
       return errors;
