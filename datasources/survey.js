@@ -1,7 +1,6 @@
 const { DataSource } = require('apollo-datasource');
 const autoBind = require('auto-bind');
 
-
 class Survey extends DataSource {
   constructor() {
     super();

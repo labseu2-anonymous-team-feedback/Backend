@@ -4,14 +4,14 @@ const models = require('../database/models');
 
 const SECRET = process.env.SECRET_KEY;
 
-const createToken = (payload) => {
+const createToken = payload => {
   const token = jwt.sign(payload, SECRET, {
-    expiresIn: 60 * 60 * 1440,
+    expiresIn: 60 * 60 * 1440
   });
   return token;
 };
 
-const decodeToken = async (token) => {
+const decodeToken = async token => {
   try {
     const decoded = await jwt.verify(token, SECRET);
     if (decoded) {
@@ -23,7 +23,7 @@ const decodeToken = async (token) => {
   }
 };
 
-const verifyUserToken = async (token) => {
+const verifyUserToken = async token => {
   try {
     if (!token) return null;
     const { __uuid } = await decodeToken(token);
@@ -41,5 +41,5 @@ const verifyUserToken = async (token) => {
 module.exports = {
   createToken,
   verifyUserToken,
-  decodeToken,
+  decodeToken
 };
