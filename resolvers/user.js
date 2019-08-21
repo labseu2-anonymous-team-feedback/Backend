@@ -11,4 +11,10 @@ module.exports = {
     },
   },
 
+  Mutation: {
+    async userLogin(root, args, { dataSources: { User } }) {
+      const user = await User.userLogin(args);
+      return user;
+    },
+  },
 };
