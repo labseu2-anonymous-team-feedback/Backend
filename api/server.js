@@ -28,6 +28,10 @@ const server = new ApolloServer({
   },
   dataSources,
   introspection: true,
+  playground: true,
+  engine: {
+    apiKey: process.env.ENGINE_API_KEY
+  }
 });
 
 server.applyMiddleware({ app });
