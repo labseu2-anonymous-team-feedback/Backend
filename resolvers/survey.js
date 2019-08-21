@@ -1,7 +1,10 @@
 module.exports = {
   Query: {
-    async getAllSurveys(root, args, { models }) {
-      const surveys = await models.Survey.findAll();
+    async getUserSurveys(root, args, { dataSources: { Survey }, user }) {
+      if (!user) {
+        throw new Error('Unauthorized Request');
+      }
+      const surveys = await Survey.getUserSurveys(user.id);
       return surveys;
     },
   },
