@@ -3,11 +3,11 @@ module.exports = (sequelize, DataTypes) => {
     'Question',
     {
       surveyId: DataTypes.INTEGER,
-      question: DataTypes.TEXT,
+      question: DataTypes.TEXT
     },
-    {},
+    {}
   );
-  Question.associate = function (models) {
+  Question.associate = function(models) {
     // associations can be defined here
   };
   return Question;
