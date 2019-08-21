@@ -5,7 +5,7 @@ const resolvers = require('../resolvers');
 const models = require('../database/models');
 const UserAPI = require('../datasources/user');
 const SurveyAPI = require('../datasources/survey');
-
+const { verifyUserToken } = require('../helpers/token');
 
 const app = express();
 
@@ -14,11 +14,20 @@ const dataSources = () => ({
   Survey: new SurveyAPI(),
 });
 
-const context = { models };
-
 
 const server = new ApolloServer({
-  typeDefs, resolvers, context, dataSources, introspection: true,
+  typeDefs,
+  resolvers,
+  context: async ({ req }) => {
+    const token = (req.headers && req.headers.authorization) || '';
+    const user = await verifyUserToken(token);
+    return {
+      models,
+      user,
+    };
+  },
+  dataSources,
+  introspection: true,
 });
 
 server.applyMiddleware({ app });

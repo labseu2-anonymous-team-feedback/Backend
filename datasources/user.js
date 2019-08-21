@@ -31,7 +31,7 @@ class User extends DataSource {
     if (user) {
       const checkPassword = bcrypt.compareSync(credentials.password, user.dataValues.password);
       if (checkPassword) {
-        const token = createToken(user);
+        const token = createToken({ __uuid: user.id });
         return {
           id: user.id, email: user.email, username: user.username, token,
         };
