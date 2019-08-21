@@ -39,6 +39,10 @@ class User extends DataSource {
       return errors;
     }
   }
+
+  async getAllUsers() {
+    return this.models.User.findAll();
+  }
 }
 
 module.exports = User;

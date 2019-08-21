@@ -1,7 +1,7 @@
 module.exports = {
   Query: {
-    async getAllUsers(root, args, { models }) {
-      const users = await models.User.findAll();
+    async getAllUsers(root, args, { dataSources: { User } }) {
+      const users = await User.getAllUsers();
       return users;
     },
   },
