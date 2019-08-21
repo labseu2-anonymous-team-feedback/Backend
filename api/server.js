@@ -4,12 +4,14 @@ const typeDefs = require('../schema');
 const resolvers = require('../resolvers');
 const models = require('../database/models');
 const UserAPI = require('../datasources/user');
+const SurveyAPI = require('../datasources/survey');
 
 
 const app = express();
 
 const dataSources = () => ({
   User: new UserAPI(),
+  Survey: new SurveyAPI(),
 });
 
 const context = { models };
