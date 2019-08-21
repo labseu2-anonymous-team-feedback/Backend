@@ -18,7 +18,7 @@ class User extends DataSource {
     const hashedPassword = generateHash(userData.password);
     const user = this.models.User.create({
       ...userData,
-      password: hashedPassword,
+      password: hashedPassword
     });
     return user;
   }
@@ -26,14 +26,20 @@ class User extends DataSource {
   async userLogin(credentials) {
     const errors = { error: 'Invalid username or password' };
     const user = await this.models.User.findOne({
-      where: { email: credentials.email },
+      where: { email: credentials.email }
     });
     if (user) {
-      const checkPassword = bcrypt.compareSync(credentials.password, user.dataValues.password);
+      const checkPassword = bcrypt.compareSync(
+        credentials.password,
+        user.dataValues.password
+      );
       if (checkPassword) {
         const token = createToken({ __uuid: user.id });
         return {
-          id: user.id, email: user.email, username: user.username, token,
+          id: user.id,
+          email: user.email,
+          username: user.username,
+          token
         };
       }
       return errors;
