@@ -1,7 +1,8 @@
 const mockUsers = require('../mock/user.mock');
 
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.bulkInsert('Users', mockUsers, {}),
+  up: (queryInterface, Sequelize) =>
+    queryInterface.bulkInsert('Users', mockUsers, {}),
 
   /*
       Add altering commands here.
@@ -14,8 +15,8 @@ module.exports = {
       }], {});
     */
 
-
-  down: (queryInterface, Sequelize) => queryInterface.bulkDelete('Users', null, {})
+  down: (queryInterface, Sequelize) =>
+    queryInterface.bulkDelete('Users', null, {})
   /*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.
@@ -23,5 +24,4 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {});
     */
-  ,
 };

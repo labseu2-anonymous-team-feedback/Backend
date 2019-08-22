@@ -14,17 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           is: {
             args: /^[a-z ]+$/i,
-            msg: 'First name must only contain letters'
-          }
-        }
-      },
-      lastname: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        validate: {
-          is: {
-            args: /^[a-z ]+$/i,
-            msg: 'Last name must only contain letters'
+            msg: 'Full name must only contain letters'
           }
         }
       },
