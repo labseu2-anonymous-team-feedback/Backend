@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable("Feedbacks", {
+    queryInterface.createTable('Feedbacks', {
       id: {
         allowNull: false,
         autoIncrement: false,
@@ -26,5 +26,5 @@ module.exports = {
       }
     }),
   // eslint-disable-next-line no-unused-vars
-  down: (queryInterface, Sequelize) => queryInterface.dropTable("Feedbacks")
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Feedbacks')
 };

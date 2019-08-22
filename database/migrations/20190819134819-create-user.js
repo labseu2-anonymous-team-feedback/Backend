@@ -2,14 +2,18 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable("Users", {
+    queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
-      fullname: {
+      firstname: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      lastname: {
         type: Sequelize.STRING,
         allowNull: true
       },
@@ -41,5 +45,5 @@ module.exports = {
       }
     }),
   // eslint-disable-next-line no-unused-vars
-  down: (queryInterface, Sequelize) => queryInterface.dropTable("Users")
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Users')
 };
