@@ -1,13 +1,15 @@
 {
   "name": "Backend",
   "version": "1.0.0",
-  "description": "## Anonymous feedback Apploication",
+  "description": "## Anonymous feedback Application",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
     "migrate": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate",
-    "seed": "npx sequelize-cli db:seed:undo:all && npx sequelize-cli db:seed:all"
+    "seed": "npx sequelize-cli db:seed:undo:all && npx sequelize-cli db:seed:all",
+    "test": "jest --detectOpenHandles --testTimeout=10000 --forceExit",
+    "coverage": "jest --coverage --detectOpenHandles --testTimeout=10000 && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,16 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/labseu2-anonymous-team-feedback/Backend/issues"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/helpers/*",
+      "/models/*"
+    ],
+    "collectCoverage": true,
+    "verbose": true
   },
   "homepage": "https://github.com/labseu2-anonymous-team-feedback/Backend#readme",
   "dependencies": {
@@ -38,11 +50,13 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
+    "coveralls": "^3.0.6",
     "eslint": "^6.2.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.1.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.0",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.1",
     "prettier": "^1.18.2"
   }
