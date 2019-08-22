@@ -1,11 +1,5 @@
 const resolver = require('../survey');
 
-describe('test setup', () => {
-  it('should return true', () => {
-    expect(true).toBe(true);
-  });
-});
-
 describe('Survey Resolver', () => {
   const authMockContext = {
     dataSources: {
@@ -34,7 +28,7 @@ describe('Survey Resolver', () => {
     { id: '089de619-981c' },
     { id: '089de619-981c43' }
   ]);
-  it('should return users surveys', async () => {
+  it('should return user surveys', async () => {
     const res = await resolver.Query.getUserSurveys(
       null,
       null,
