@@ -38,6 +38,7 @@ describe('Survey Resolver', () => {
   });
   it('should fail if unauthorized user tries to get surveys', async () => {
     try {
+      // eslint-disable-next-line no-unused-vars
       const res = await resolver.Query.getUserSurveys(
         null,
         null,
