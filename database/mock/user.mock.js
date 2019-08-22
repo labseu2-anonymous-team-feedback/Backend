@@ -68,8 +68,6 @@ module.exports = [
   {
     id: '844e111b-5e8f-48ca-9a8e-ceefde25479a',
     username: 'mcadalleder6',
-    // firstname: 'Amos Dale',
-    // lastname: 'Amos Dale',
     profileImage: 'myimage.jpg',
     email: 'nantcliffe6@domainmarket.com',
     password: '$2y$12$KOyzmBBn2ADOgvQ5RbNlwelqbrGcqQ45KbZYhcNU1b6ZA0dhCZGum',
@@ -80,8 +78,6 @@ module.exports = [
     id: 'da90dadb-df3d-4f1d-b2f9-08dd0fcb6554',
     username: 'cdicken7',
     firstname: 'Amos Dale',
-    // lastname: 'Amos Dale',
-    // profileImage: 'myimage.jpg',
     email: 'eleeming7@jigsy.com',
     password: '$2y$12$KOyzmBBn2ADOgvQ5RbNlwelqbrGcqQ45KbZYhcNU1b6ZA0dhCZGum',
     createdAt: new Date(),
@@ -90,9 +86,7 @@ module.exports = [
   {
     id: 'd98f55ea-1e9d-45c7-ac61-018eac24a87c',
     username: 'hwickenden8',
-    // firstname: 'Dale',
     lastname: 'Amos',
-    // profileImage: 'myimage.jpg',
     email: 'dvigus8@tiny.cc',
     password: '$2y$12$KOyzmBBn2ADOgvQ5RbNlwelqbrGcqQ45KbZYhcNU1b6ZA0dhCZGum',
     createdAt: new Date(),
@@ -101,9 +95,6 @@ module.exports = [
   {
     id: '32c439d7-c367-4003-872d-7abdef9dc620',
     username: 'sashby9',
-    // firstname: 'Amos Dale',
-    // lastname: 'Amos Dale',
-    // profileImage: 'myimage.jpg',
     email: 'tjorissen9@smh.com.au',
     password: '$2y$12$KOyzmBBn2ADOgvQ5RbNlwelqbrGcqQ45KbZYhcNU1b6ZA0dhCZGum',
     createdAt: new Date(),
