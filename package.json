@@ -8,7 +8,8 @@
     "dev": "nodemon index.js",
     "migrate": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate",
     "seed": "npx sequelize-cli db:seed:undo:all && npx sequelize-cli db:seed:all",
-    "test":"jest --detectOpenHandles --testTimeout=10000 --forceExit"
+    "test": "jest --detectOpenHandles --testTimeout=10000 --forceExit",
+    "coverage": "jest --coverage --detectOpenHandles --testTimeout=10000 && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -49,6 +50,7 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
+    "coveralls": "^3.0.6",
     "eslint": "^6.2.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.1.0",
