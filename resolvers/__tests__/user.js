@@ -21,4 +21,12 @@ describe('User Resolver', () => {
     expect(res).toEqual([{ id: '089de619-981c43', username: 'tester' }]);
     expect(getAllUsers).toBeCalledTimes(1);
   });
+  it('should should get user surveys', async () => {
+    const Fn = jest.fn();
+    const user = new Fn();
+    user.getSurveys = jest.fn();
+    user.getSurveys.mockReturnValueOnce([{ title: 'test survey' }]);
+    const res = await resolver.User.surveys(user);
+    expect(res).toEqual([{ title: 'test survey' }]);
+  });
 });
