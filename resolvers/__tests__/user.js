@@ -45,4 +45,22 @@ describe('User Resolver', () => {
     expect(res).toEqual(userData);
     expect(createAccount).toBeCalledTimes(1);
   });
+
+  it('should log in user', async () => {
+    const userData = {
+      email: 'a@a.com',
+      password: 'password'
+    };
+    userLogin.mockReturnValueOnce({
+      email: 'a@a.com',
+      token: 'hkajhkhiuiqwixmaa'
+    });
+
+    const res = await resolver.Mutation.userLogin(null, userData, mockContext);
+    expect(userLogin).toBeCalledTimes(1);
+    expect(res).toEqual({
+      email: 'a@a.com',
+      token: 'hkajhkhiuiqwixmaa'
+    });
+  });
 });
