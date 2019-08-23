@@ -68,7 +68,6 @@ module.exports = {
         }
 
         if (info) {
-          console.log(info);
           switch (info.code) {
             case 'ETIMEDOUT':
               return new Error('Failed to reach Google: Try Again');
