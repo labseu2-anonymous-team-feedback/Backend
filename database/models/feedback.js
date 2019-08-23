@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  Feedback.associate = function(models) {
+  Feedback.associate = (models) => {
     // associations can be defined here
   };
   return Feedback;
