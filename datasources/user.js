@@ -67,7 +67,8 @@ class User extends DataSource {
       });
       return newUser.get();
     }
-    return user.get();
+    const token = createToken({ __uuid: user.get().id });
+    return { ...user.get(), token };
   }
 }
 
