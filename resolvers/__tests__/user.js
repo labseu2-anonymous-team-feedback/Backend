@@ -29,4 +29,20 @@ describe('User Resolver', () => {
     const res = await resolver.User.surveys(user);
     expect(res).toEqual([{ title: 'test survey' }]);
   });
+
+  it('should create a new user', async () => {
+    const userData = {
+      username: 'tester',
+      email: 'a@a.com',
+      password: 'password'
+    };
+    createAccount.mockReturnValueOnce(userData);
+    const res = await resolver.Mutation.createAccount(
+      null,
+      userData,
+      mockContext
+    );
+    expect(res).toEqual(userData);
+    expect(createAccount).toBeCalledTimes(1);
+  });
 });
