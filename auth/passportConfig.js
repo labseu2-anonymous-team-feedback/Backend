@@ -1,6 +1,5 @@
 const passport = require('passport');
 const GoogleTokenStrategy = require('passport-google-token').Strategy;
-// const GoogleStrategy = require('passport-google-oauth20').Strategy;
 require('dotenv').config();
 
 // GOOGLE STRATEGY
