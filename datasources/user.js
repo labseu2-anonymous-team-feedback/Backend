@@ -48,6 +48,28 @@ class User extends DataSource {
   async getAllUsers() {
     return this.models.User.findAll();
   }
+
+  // eslint-disable-next-line no-unused-vars
+  async GoogleUser({ accessToken, refreshToken, profile }) {
+    const user = await this.models.User.findOne({
+      where: { email: profile.emails[0].value },
+      attributes: ['id', 'username', 'email']
+    });
+    // no user was found, lets create a new one
+    if (!user) {
+      const hashedPassword = generateHash(profile.id);
+      const newUser = await this.models.User.create({
+        username:
+          profile.displayName || `${profile.familyName} ${profile.givenName}`,
+        email: profile.emails[0].value,
+        password: hashedPassword,
+        token: accessToken
+      });
+      return newUser.get();
+    }
+    const token = createToken({ __uuid: user.get().id });
+    return { ...user.get(), token };
+  }
 }
 
 module.exports = User;

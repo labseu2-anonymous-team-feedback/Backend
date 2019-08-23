@@ -18,6 +18,16 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       },
+      lastname: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+          is: {
+            args: /^[a-z ]+$/i,
+            msg: 'Last name must only contain letters'
+          }
+        }
+      },
       username: {
         type: DataTypes.STRING,
         unique: true,
