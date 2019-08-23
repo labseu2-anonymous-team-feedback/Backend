@@ -24,7 +24,6 @@ class User extends DataSource {
   }
 
   async userLogin(credentials) {
-    const errors = { error: 'Invalid username or password' };
     const user = await this.models.User.findOne({
       where: { email: credentials.email }
     });
@@ -42,7 +41,7 @@ class User extends DataSource {
           token
         };
       }
-      return errors;
+      return null;
     }
   }
 

@@ -35,6 +35,7 @@ module.exports = {
       }
     ) {
       const user = await User.userLogin(args);
+      if (!user) throw new Error('Invalid email or password');
       return user;
     }
   }
