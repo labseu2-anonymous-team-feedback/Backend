@@ -36,8 +36,10 @@ const userTypes = gql`
   }
 
   type AuthResponse {
-    token: String
+    id: String
     username: String
+    email: String
+    token: String
   }
 
   input AuthInput {

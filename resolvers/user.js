@@ -59,14 +59,11 @@ module.exports = {
       try {
         // data contains the accessToken, refreshToken and profile from passport
         const { data, info } = await authenticateGoogle(req, res);
-        console.log(data, info);
+        // console.log(data, info);
         if (data) {
           const user = await User.GoogleUser(data);
-
           if (user) {
-            return {
-              username: user.name
-            };
+            return user;
           }
         }
 
