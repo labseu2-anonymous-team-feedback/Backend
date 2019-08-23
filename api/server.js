@@ -17,12 +17,14 @@ const dataSources = () => ({
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: async ({ req }) => {
+  context: async ({ req, res }) => {
     const token = (req.headers && req.headers.authorization) || '';
     const user = await verifyUserToken(token);
     return {
       models,
-      user
+      user,
+      req,
+      res
     };
   },
   dataSources,

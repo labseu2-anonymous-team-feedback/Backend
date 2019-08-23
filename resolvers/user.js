@@ -1,3 +1,5 @@
+const { authenticateGoogle } = require('../auth/passportConfig');
+
 module.exports = {
   Query: {
     async getAllUsers(
@@ -36,6 +38,51 @@ module.exports = {
     ) {
       const user = await User.userLogin(args);
       return user;
+    },
+
+    async authGoogle(
+      root,
+      {
+        googleAccessToken: { accessToken }
+      },
+      {
+        dataSources: { User },
+        req,
+        res
+      }
+    ) {
+      req.body = {
+        ...req.body,
+        access_token: accessToken
+      };
+
+      try {
+        // data contains the accessToken, refreshToken and profile from passport
+        const { data, info } = await authenticateGoogle(req, res);
+        console.log(data, info);
+        if (data) {
+          const user = await User.GoogleUser(data);
+
+          if (user) {
+            return {
+              username: user.name
+            };
+          }
+        }
+
+        if (info) {
+          console.log(info);
+          switch (info.code) {
+            case 'ETIMEDOUT':
+              return new Error('Failed to reach Google: Try Again');
+            default:
+              return new Error('something went wrong');
+          }
+        }
+        return Error('server error');
+      } catch (error) {
+        return error;
+      }
     }
   }
 };

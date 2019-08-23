@@ -49,6 +49,28 @@ class User extends DataSource {
   async getAllUsers() {
     return this.models.User.findAll();
   }
+
+  async GoogleUser({ accessToken, refreshToken, profile }) {
+    console.log(accessToken, '======', profile);
+    const user = await this.models.User.findOne({
+      where: { email: profile.emails[0].value }
+    });
+    // no user was found, lets create a new one
+    if (!user) {
+      const hashedPassword = generateHash('123456789');
+      const newUser = await this.models.User.create({
+        username:
+          profile.displayName || `${profile.familyName} ${profile.givenName}`,
+        email: profile.emails[0].value,
+        password: hashedPassword,
+        // id: profile.id,
+        token: accessToken
+      });
+
+      return newUser;
+    }
+    return user;
+  }
 }
 
 module.exports = User;
