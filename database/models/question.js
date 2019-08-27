@@ -3,12 +3,16 @@ module.exports = (sequelize, DataTypes) => {
     'Question',
     {
       surveyId: DataTypes.INTEGER,
-      question: DataTypes.TEXT
+      question: DataTypes.TEXT,
+      type: DataTypes.ENUM('text', 'rating')
     },
     {}
   );
-  Question.associate = (models) => {
-    // associations can be defined here
+  Question.associate = models => {
+    Question.belongsTo(models.Survey, {
+      foreignKey: 'surveyId',
+      as: 'survey'
+    });
   };
   return Question;
 };

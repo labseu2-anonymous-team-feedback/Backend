@@ -11,7 +11,31 @@ const surveyTypes = gql`
   }
 
   type Mutation {
-    createNewSurvey(title: String!): Survey
+    createNewSurvey(input: SurveyInput): SurveyResponse
+  }
+  type Question {
+    id: String!
+    question: String!
+    type: String
+    survey: Survey!
+  }
+  input SurveyInput {
+    title: String!
+    questions: [QuestionInput!]
+  }
+  input QuestionInput {
+    question: String!
+    type: String
+  }
+  type QuestionResponse {
+    id: String
+    question: String
+    type: String
+  }
+
+  type SurveyResponse {
+    title: String!
+    questions: [QuestionResponse]
   }
 `;
 

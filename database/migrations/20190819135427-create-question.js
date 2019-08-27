@@ -13,6 +13,10 @@ module.exports = {
       question: {
         type: Sequelize.TEXT
       },
+      type: {
+        type: Sequelize.ENUM('text', 'rating'),
+        defaultValue: 'text'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
