@@ -1,7 +1,6 @@
 const { DataSource } = require('apollo-datasource');
 const autoBind = require('auto-bind');
 const { createToken } = require('../helpers/token');
-const { generateHash } = require('../helpers/hash');
 
 class User extends DataSource {
   constructor() {
@@ -51,15 +50,18 @@ class User extends DataSource {
     });
     // no user was found, lets create a new one
     if (!user) {
-      const hashedPassword = generateHash(profile.id);
       const newUser = await this.models.User.create({
         username:
           profile.displayName || `${profile.familyName} ${profile.givenName}`,
         email: profile.emails[0].value,
-        password: hashedPassword,
+        password: profile.id,
         token: accessToken
       });
-      return newUser.get();
+      const token = await createToken({
+        __uuid: newUser.get().id,
+        username: newUser.get().username
+      });
+      return { ...newUser.get(), token };
     }
     const token = createToken({
       __uuid: user.get().id,
