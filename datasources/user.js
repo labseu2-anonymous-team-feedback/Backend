@@ -27,7 +27,7 @@ class User extends DataSource {
     if (user) {
       const checkPassword = await user.validatePassword(credentials.password);
       if (checkPassword) {
-        const token = createToken({ __uuid: user.id });
+        const token = createToken({ __uuid: user.id, username: user.username });
         return {
           id: user.id,
           email: user.email,
@@ -61,7 +61,10 @@ class User extends DataSource {
       });
       return newUser.get();
     }
-    const token = createToken({ __uuid: user.get().id });
+    const token = createToken({
+      __uuid: user.get().id,
+      username: user.get().username
+    });
     return { ...user.get(), token };
   }
 }
