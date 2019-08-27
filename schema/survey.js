@@ -21,7 +21,13 @@ const surveyTypes = gql`
     survey: Survey!
   }
   input SurveyInput {
+    """
+    The title of the survey
+    """
     title: String!
+    """
+    The array of question objects
+    """
     questions: [QuestionInput!]!
   }
   input QuestionInput {
