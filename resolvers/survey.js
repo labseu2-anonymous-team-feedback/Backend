@@ -1,41 +1,38 @@
+const { combineResolvers } = require('graphql-resolvers');
+const { validateSurvey } = require('../validations');
+const { isAuthenticated } = require('../midlewares/auth');
+
 module.exports = {
   Query: {
-    async getUserSurveys(
-      root,
-      args,
-      {
-        dataSources: { Survey },
-        user
+    getUserSurveys: combineResolvers(
+      isAuthenticated,
+      async (_, __, { dataSources: { Survey }, user }) => {
+        const surveys = await Survey.getUserSurveys(user.id);
+        return surveys;
       }
-    ) {
-      if (!user) {
-        throw new Error('Unauthorized Request');
-      }
-      const surveys = await Survey.getUserSurveys(user.id);
-      return surveys;
-    }
+    )
   },
 
   Mutation: {
-    async createNewSurvey(
-      root,
-      args,
-      {
-        dataSources: { Survey },
-        user
+    createNewSurvey: combineResolvers(
+      isAuthenticated,
+      validateSurvey,
+      async (_, surveyData, { dataSources: { Survey }, user }) => {
+        return Survey.createSurvey(surveyData.input, user.id);
       }
-    ) {
-      if (!user) {
-        throw new Error(
-          'Unauthorized Request, you must log in to create a survey'
-        );
-      }
-      return Survey.createSurvey({ title: args.title, userId: user.id });
-    }
+    )
   },
   Survey: {
     owner(survey) {
       return survey.getOwner();
+    },
+    questions(survey) {
+      return survey.getQuestions();
+    }
+  },
+  Question: {
+    survey(question) {
+      return question.getSurvey();
     }
   }
 };
