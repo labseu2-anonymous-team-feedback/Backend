@@ -19,7 +19,7 @@ module.exports = {
   Mutation: {
     async createNewSurvey(
       root,
-      args,
+      surveyData,
       {
         dataSources: { Survey },
         user
@@ -30,7 +30,7 @@ module.exports = {
           'Unauthorized Request, you must log in to create a survey'
         );
       }
-      return Survey.createSurvey({ title: args.title, userId: user.id });
+      return Survey.createSurvey(surveyData.input, user.id);
     }
   },
   Survey: {

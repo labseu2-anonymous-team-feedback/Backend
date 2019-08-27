@@ -21,7 +21,7 @@ const surveyTypes = gql`
   }
   input SurveyInput {
     title: String!
-    questions: [QuestionInput!]
+    questions: [QuestionInput!]!
   }
   input QuestionInput {
     question: String!

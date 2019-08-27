@@ -11,8 +11,24 @@ class Survey extends DataSource {
     this.models = context.models;
   }
 
-  async createSurvey(surveyData) {
-    return this.models.Survey.create(surveyData);
+  async createSurvey(surveyData, userId) {
+    const { title, questions } = surveyData;
+    const newSurvey = await this.models.Survey.create(
+      {
+        userId,
+        title,
+        questions
+      },
+      {
+        include: [
+          {
+            model: this.models.Question,
+            as: 'questions'
+          }
+        ]
+      }
+    );
+    return newSurvey.get({ plain: true });
   }
 
   async getUserSurveys(userId) {

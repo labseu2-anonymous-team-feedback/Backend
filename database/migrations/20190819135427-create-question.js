@@ -5,10 +5,11 @@ module.exports = {
         allowNull: false,
         autoIncrement: false,
         primaryKey: true,
-        type: Sequelize.UUID
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4
       },
       surveyId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       question: {
         type: Sequelize.TEXT

@@ -2,7 +2,13 @@ module.exports = (sequelize, DataTypes) => {
   const Question = sequelize.define(
     'Question',
     {
-      surveyId: DataTypes.INTEGER,
+      id: {
+        allowNull: false,
+        primaryKey: true,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4
+      },
+      surveyId: DataTypes.UUIDV4,
       question: DataTypes.TEXT,
       type: DataTypes.ENUM('text', 'rating')
     },
