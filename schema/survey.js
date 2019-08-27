@@ -8,10 +8,11 @@ const surveyTypes = gql`
     id: String!
     title: String!
     owner: User!
+    questions: [Question!]!
   }
 
   type Mutation {
-    createNewSurvey(input: SurveyInput): SurveyResponse
+    createNewSurvey(input: SurveyInput!): SurveyResponse
   }
   type Question {
     id: String!
