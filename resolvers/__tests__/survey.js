@@ -1,3 +1,4 @@
+const { AuthenticationError } = require('apollo-server-express');
 const resolver = require('../survey');
 
 describe('Survey Resolver', () => {
@@ -45,7 +46,9 @@ describe('Survey Resolver', () => {
         unAuthMockContext
       );
     } catch (error) {
-      expect(error).toEqual(new Error('Unauthorized Request'));
+      expect(error).toEqual(
+        new AuthenticationError('Unauthorized Request, Authentication required')
+      );
     }
   });
 
@@ -55,9 +58,19 @@ describe('Survey Resolver', () => {
   };
   createSurvey.mockReturnValueOnce({ dataValues: newSurvey });
   it('should create new survey if user is authenticated', async () => {
+    const args = {
+      input: {
+        title: 'test survey',
+        questions: [
+          {
+            question: 'question 1'
+          }
+        ]
+      }
+    };
     const res = await resolver.Mutation.createNewSurvey(
       null,
-      { title: 'test' },
+      args,
       authMockContext
     );
     expect(res.dataValues).toEqual(newSurvey);
@@ -72,7 +85,7 @@ describe('Survey Resolver', () => {
       expect(res.dataValues).toEqual(newSurvey);
     } catch (error) {
       expect(error).toEqual(
-        new Error('Unauthorized Request, you must log in to create a survey')
+        new AuthenticationError('Unauthorized Request, Authentication required')
       );
     }
   });
@@ -83,5 +96,30 @@ describe('Survey Resolver', () => {
     survey.getOwner.mockReturnValueOnce({ name: 'tester' });
     const res = await resolver.Survey.owner(survey);
     expect(res).toEqual({ name: 'tester' });
+  });
+  it('should should get survey questions', async () => {
+    const Fn = jest.fn();
+    const survey = new Fn();
+    survey.getQuestions = jest.fn();
+    survey.getQuestions.mockReturnValueOnce([
+      { id: '089de619-981c43', question: 'what is test' }
+    ]);
+    const res = await resolver.Survey.questions(survey);
+    expect(res).toEqual([{ id: '089de619-981c43', question: 'what is test' }]);
+  });
+
+  it("should should get a question's survey", async () => {
+    const Fn = jest.fn();
+    const question = new Fn();
+    question.getSurvey = jest.fn();
+    question.getSurvey.mockReturnValueOnce({
+      id: '089de619-981c43',
+      title: 'test survey'
+    });
+    const res = await resolver.Question.survey(question);
+    expect(res).toEqual({
+      id: '089de619-981c43',
+      title: 'test survey'
+    });
   });
 });
