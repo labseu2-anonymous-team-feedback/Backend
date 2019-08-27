@@ -13,6 +13,16 @@ module.exports = {
     ) {
       const users = await User.getAllUsers();
       return users;
+    },
+    async getUserById(
+      root,
+      args,
+      {
+        dataSources: { User }
+      }
+    ) {
+      const user = await User.getUserById(args);
+      return user;
     }
   },
   User: {
