@@ -1,3 +1,5 @@
+const { combineResolvers } = require('graphql-resolvers');
+const { validateSignup } = require('../validations');
 const { authenticateGoogle } = require('../auth/passportConfig');
 
 module.exports = {
@@ -20,27 +22,20 @@ module.exports = {
   },
 
   Mutation: {
-    async createAccount(
-      root,
-      userData,
-      {
-        dataSources: { User }
+    createAccount: combineResolvers(
+      validateSignup,
+      async (root, userData, { dataSources: { User } }) => {
+        return User.createAccount(userData);
       }
-    ) {
-      return User.createAccount(userData);
-    },
-    async userLogin(
-      root,
-      args,
-      {
-        dataSources: { User }
+    ),
+    userLogin: combineResolvers(
+      validateSignup,
+      async (root, args, { dataSources: { User } }) => {
+        const user = await User.userLogin(args);
+        if (!user) throw new Error('Invalid email or password');
+        return user;
       }
-    ) {
-      const user = await User.userLogin(args);
-      if (!user) throw new Error('Invalid email or password');
-      return user;
-    },
-
+    ),
     async authGoogle(
       root,
       {
