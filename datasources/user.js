@@ -1,6 +1,5 @@
 const { DataSource } = require('apollo-datasource');
 const autoBind = require('auto-bind');
-const bcrypt = require('bcrypt');
 const { createToken } = require('../helpers/token');
 const { generateHash } = require('../helpers/hash');
 
@@ -15,10 +14,8 @@ class User extends DataSource {
   }
 
   async createAccount(userData) {
-    const hashedPassword = generateHash(userData.password);
     const user = this.models.User.create({
-      ...userData,
-      password: hashedPassword
+      ...userData
     });
     return user;
   }
@@ -28,10 +25,7 @@ class User extends DataSource {
       where: { email: credentials.email }
     });
     if (user) {
-      const checkPassword = bcrypt.compareSync(
-        credentials.password,
-        user.dataValues.password
-      );
+      const checkPassword = await user.validatePassword(credentials.password);
       if (checkPassword) {
         const token = createToken({ __uuid: user.id });
         return {
