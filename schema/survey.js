@@ -34,6 +34,7 @@ const surveyTypes = gql`
   }
 
   type SurveyResponse {
+    id: String
     title: String!
     questions: [QuestionResponse]
   }

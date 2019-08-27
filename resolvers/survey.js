@@ -37,5 +37,10 @@ module.exports = {
     owner(survey) {
       return survey.getOwner();
     }
+  },
+  Question: {
+    survey(question) {
+      return question.getSurvey();
+    }
   }
 };
