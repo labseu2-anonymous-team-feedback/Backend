@@ -42,6 +42,12 @@ class User extends DataSource {
     return this.models.User.findAll();
   }
 
+  async getUserById({ userId }) {
+    return this.models.User.findOne({
+      where: { id: userId }
+    });
+  }
+
   // eslint-disable-next-line no-unused-vars
   async GoogleUser({ accessToken, refreshToken, profile }) {
     const user = await this.models.User.findOne({
