@@ -1,4 +1,5 @@
 const { combineResolvers } = require('graphql-resolvers');
+const { AuthenticationError } = require('apollo-server-express');
 const { validateSignup } = require('../validations');
 const { authenticateGoogle } = require('../auth/passportConfig');
 
@@ -85,6 +86,19 @@ module.exports = {
       } catch (error) {
         return error;
       }
+    },
+    async verifyAccount(
+      root,
+      { token },
+      {
+        dataSources: { User }
+      }
+    ) {
+      const response = User.verifyAccount(token);
+      if (!response) {
+        throw new AuthenticationError('Invalid verification link');
+      }
+      return response;
     }
   }
 };

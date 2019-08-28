@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { DataSource } = require('apollo-datasource');
 const autoBind = require('auto-bind');
-const { createToken } = require('../helpers/token');
+const { createToken, verifyUserToken } = require('../helpers/token');
 const { generateMailTemplate, sendMail } = require('../helpers/mail');
 
 class User extends DataSource {
@@ -99,6 +99,19 @@ class User extends DataSource {
       html: template
     };
     return sendMail(msg);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async verifyAccount(token) {
+    const user = await verifyUserToken(token);
+    if (user && user.verifyEmail()) {
+      const authToken = createToken({ __uuid: user.id });
+      return {
+        ...user.get(),
+        token: authToken
+      };
+    }
+    return false;
   }
 }
 

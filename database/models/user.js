@@ -66,7 +66,8 @@ module.exports = (sequelize, DataTypes) => {
       profileImage: {
         type: DataTypes.STRING,
         allowNull: true
-      }
+      },
+      verified: DataTypes.BOOLEAN
     },
     {}
   );
@@ -81,6 +82,9 @@ module.exports = (sequelize, DataTypes) => {
   User.prototype.validatePassword = async function(password) {
     const isValid = await bcrypt.compareSync(password, this.password);
     return isValid;
+  };
+  User.prototype.verifyEmail = async function() {
+    return this.update({ verified: true });
   };
   User.associate = models => {
     User.hasMany(models.Survey, {
