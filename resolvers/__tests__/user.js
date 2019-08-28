@@ -1,3 +1,4 @@
+const { AuthenticationError } = require('apollo-server-express');
 const resolver = require('../user');
 
 describe('User Resolver', () => {
@@ -6,13 +7,14 @@ describe('User Resolver', () => {
       User: {
         getAllUsers: jest.fn(),
         createAccount: jest.fn(),
-        userLogin: jest.fn()
+        userLogin: jest.fn(),
+        verifyAccount: jest.fn()
       }
     }
   };
 
   const { User } = mockContext.dataSources;
-  const { getAllUsers, createAccount, userLogin } = User;
+  const { getAllUsers, createAccount, userLogin, verifyAccount } = User;
   it('should get All users', async () => {
     getAllUsers.mockReturnValueOnce([
       { id: '089de619-981c43', username: 'tester' }
@@ -62,5 +64,28 @@ describe('User Resolver', () => {
       email: 'a@a.com',
       token: 'hkajhkhiuiqwixmaa'
     });
+  });
+
+  it('should throw error if email verification token is invalid', async () => {
+    try {
+      await resolver.Mutation.verifyAccount(
+        null,
+        { token: 'hsdgjhhskjhk' },
+        mockContext
+      );
+    } catch (error) {
+      expect(error).toEqual(
+        new AuthenticationError('Invalid verification link')
+      );
+    }
+  });
+  it('should log user in if token in valid', async () => {
+    verifyAccount.mockReturnValueOnce({ token: 'jhjhjhassmmn.uyyj.wQ' });
+    const res = await resolver.Mutation.verifyAccount(
+      null,
+      { token: 'hsdgjhhskjhk' },
+      mockContext
+    );
+    expect(res).toEqual({ token: 'jhjhjhassmmn.uyyj.wQ' });
   });
 });
