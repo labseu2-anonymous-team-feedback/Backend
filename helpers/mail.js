@@ -54,8 +54,10 @@ const sendMail = async msg => {
   try {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const sent = await sgMail.send(msg);
+    console.log('===============sent===============', sent);
     return sent;
   } catch (error) {
+    console.log('===============mail error============', error);
     return null;
   }
 };
