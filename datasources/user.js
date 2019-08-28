@@ -101,6 +101,13 @@ class User extends DataSource {
     return sendMail(msg);
   }
 
+  /**
+   *
+   * Verify User email
+   * @param {string} token - verification token
+   * @returns {object} { User, token}
+   * @memberof User
+   */
   // eslint-disable-next-line class-methods-use-this
   async verifyAccount(token) {
     const user = await verifyUserToken(token);

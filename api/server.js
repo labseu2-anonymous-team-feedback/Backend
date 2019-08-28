@@ -20,9 +20,10 @@ const server = new ApolloServer({
   context: async ({ req, res }) => {
     const token = (req.headers && req.headers.authorization) || '';
     const user = await verifyUserToken(token);
+    const userData = user && user.get();
     return {
       models,
-      user,
+      user: userData,
       req,
       res
     };
