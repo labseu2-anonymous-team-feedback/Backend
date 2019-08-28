@@ -1,7 +1,12 @@
 const { DataSource } = require('apollo-datasource');
 const autoBind = require('auto-bind');
 const { createToken } = require('../helpers/token');
-
+/**
+ *
+ *
+ * @class User
+ * @extends {DataSource}
+ */
 class User extends DataSource {
   constructor() {
     super();
@@ -12,6 +17,13 @@ class User extends DataSource {
     this.models = context.models;
   }
 
+  /**
+   *
+   *
+   * @param {*} userData
+   * @returns
+   * @memberof User
+   */
   async createAccount(userData) {
     const user = this.models.User.create({
       ...userData
@@ -19,6 +31,13 @@ class User extends DataSource {
     return user;
   }
 
+  /**
+   *
+   *
+   * @param {*} credentials
+   * @returns
+   * @memberof User
+   */
   async userLogin(credentials) {
     const user = await this.models.User.findOne({
       where: { email: credentials.email }
@@ -38,18 +57,37 @@ class User extends DataSource {
     }
   }
 
+  /**
+   *
+   *
+   * @returns
+   * @memberof User
+   */
   async getAllUsers() {
     return this.models.User.findAll();
   }
 
+  /**
+   *
+   *
+   * @param {*} { userId }
+   * @returns
+   * @memberof User
+   */
   async getUserById({ userId }) {
     return this.models.User.findOne({
       where: { id: userId }
     });
   }
 
-  // eslint-disable-next-line no-unused-vars
-  async GoogleUser({ accessToken, refreshToken, profile }) {
+  /**
+   *
+   *
+   * @param {*} profile
+   * @returns
+   * @memberof User
+   */
+  async GoogleUser(profile) {
     const user = await this.models.User.findOne({
       where: { email: profile.emails[0].value },
       attributes: ['id', 'username', 'email']
@@ -60,8 +98,7 @@ class User extends DataSource {
         username:
           profile.displayName || `${profile.familyName} ${profile.givenName}`,
         email: profile.emails[0].value,
-        password: profile.id,
-        token: accessToken
+        password: profile.id
       });
       const token = await createToken({
         __uuid: newUser.get().id,
