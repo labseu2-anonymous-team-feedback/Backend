@@ -29,8 +29,7 @@ const verifyUserToken = async token => {
     const { __uuid } = await decodeToken(token);
     const user = await models.User.findOne({ where: { id: __uuid } });
     if (user) {
-      const { password, ...returnedData } = user.get();
-      return returnedData;
+      return user;
     }
     return null;
   } catch (error) {

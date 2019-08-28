@@ -21,6 +21,7 @@ const userTypes = gql`
       password: String!
     ): createAccountResponse
     authGoogle: AuthResponse
+    verifyAccount(token: String!): LoginResponse!
   }
 
   type LoginResponse {
@@ -28,6 +29,7 @@ const userTypes = gql`
     username: String
     email: String
     token: String
+    verified: Boolean
   }
   type createAccountResponse {
     id: String

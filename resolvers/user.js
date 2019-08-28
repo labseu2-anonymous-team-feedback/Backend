@@ -79,6 +79,19 @@ module.exports = {
       } catch (error) {
         return error;
       }
+    },
+    async verifyAccount(
+      root,
+      { token },
+      {
+        dataSources: { User }
+      }
+    ) {
+      const response = User.verifyAccount(token);
+      if (!response) {
+        throw new AuthenticationError('Invalid verification link');
+      }
+      return response;
     }
   }
 };
