@@ -20,7 +20,7 @@ const userTypes = gql`
       email: String!
       password: String!
     ): createAccountResponse
-    authGoogle(googleAccessToken: AuthInput!): AuthResponse
+    authGoogle: AuthResponse
     verifyAccount(token: String!): LoginResponse!
   }
 
@@ -42,10 +42,6 @@ const userTypes = gql`
     username: String
     email: String
     token: String
-  }
-
-  input AuthInput {
-    accessToken: String!
   }
 `;
 

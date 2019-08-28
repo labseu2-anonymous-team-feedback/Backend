@@ -1,7 +1,6 @@
 const { combineResolvers } = require('graphql-resolvers');
 const { AuthenticationError } = require('apollo-server-express');
 const { validateSignup } = require('../validations');
-const { authenticateGoogle } = require('../auth/passportConfig');
 
 module.exports = {
   Query: {
@@ -47,42 +46,36 @@ module.exports = {
         return user;
       }
     ),
+    /**
+     *
+     *
+     * @param {*} root
+     * @param {*} args
+     * @param {*} {
+     *         dataSources: { User },
+     *         app
+     *       }
+     * @returns user deatails
+     */
     async authGoogle(
       root,
-      {
-        googleAccessToken: { accessToken }
-      },
+      args,
       {
         dataSources: { User },
-        req,
-        res
+        app
       }
     ) {
-      req.body = {
-        ...req.body,
-        access_token: accessToken
-      };
-
       try {
-        // data contains the accessToken, refreshToken and profile from passport
-        const { data, info } = await authenticateGoogle(req, res);
-        // console.log(data, info);
-        if (data) {
-          const user = await User.GoogleUser(data);
-          if (user) {
-            return user;
-          }
-        }
+        // app contains the accessToken, refreshToken and profile from passport
+        const data = app.locals.profile;
 
-        if (info) {
-          switch (info.code) {
-            case 'ETIMEDOUT':
-              return new Error('Failed to reach Google: Try Again');
-            default:
-              return new Error('something went wrong');
-          }
+        if (!data) {
+          throw new AuthenticationError('Google Authentication Failed');
         }
-        return Error('server error');
+        const user = await User.GoogleUser(data);
+        if (user) {
+          return user;
+        }
       } catch (error) {
         return error;
       }
