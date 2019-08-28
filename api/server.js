@@ -63,8 +63,8 @@ const server = new ApolloServer({
     const userData = user && user.get();
     return {
       models,
-      app
-      user: userData,
+      app,
+      user: userData
     };
   },
   dataSources,
