@@ -1,4 +1,4 @@
-const { AuthenticationError } = require('apollo-server-express');
+const { AuthenticationError, ApolloError } = require('apollo-server-express');
 const resolver = require('../user');
 
 describe('User Resolver', () => {
@@ -8,13 +8,22 @@ describe('User Resolver', () => {
         getAllUsers: jest.fn(),
         createAccount: jest.fn(),
         userLogin: jest.fn(),
-        verifyAccount: jest.fn()
+        verifyAccount: jest.fn(),
+        sendResetPasswordEmail: jest.fn(),
+        resetPassword: jest.fn()
       }
     }
   };
 
   const { User } = mockContext.dataSources;
-  const { getAllUsers, createAccount, userLogin, verifyAccount } = User;
+  const {
+    getAllUsers,
+    createAccount,
+    userLogin,
+    verifyAccount,
+    sendResetPasswordEmail,
+    resetPassword
+  } = User;
   it('should get All users', async () => {
     getAllUsers.mockReturnValueOnce([
       { id: '089de619-981c43', username: 'tester' }
@@ -87,5 +96,51 @@ describe('User Resolver', () => {
       mockContext
     );
     expect(res).toEqual({ token: 'jhjhjhassmmn.uyyj.wQ' });
+  });
+  it('should throw error if user with specified email does not exist', async () => {
+    try {
+      await resolver.Mutation.sendResetPasswordEmail(
+        null,
+        { email: 'test@example.com' },
+        mockContext
+      );
+    } catch (error) {
+      expect(error).toEqual(
+        new ApolloError(
+          'The user with the specified email address does not exist'
+        )
+      );
+    }
+  });
+  it('should send reset password email if user exists', async () => {
+    sendResetPasswordEmail.mockReturnValueOnce({ message: 'email sent' });
+    const res = await resolver.Mutation.sendResetPasswordEmail(
+      null,
+      { email: 'test@example.com' },
+      mockContext
+    );
+    expect(res).toEqual({ message: 'email sent' });
+  });
+  it('should throw error if reset password token is invalid', async () => {
+    try {
+      await resolver.Mutation.resetPassword(
+        null,
+        { email: 'test@example.com', token: 'invalidtoken' },
+        mockContext
+      );
+    } catch (error) {
+      expect(error).toEqual(
+        new ApolloError('Password reset failed, please try again')
+      );
+    }
+  });
+  it('should reset password if token is valid', async () => {
+    resetPassword.mockReturnValueOnce({ message: 'success' });
+    const res = await resolver.Mutation.resetPassword(
+      null,
+      { email: 'test@example.com' },
+      mockContext
+    );
+    expect(res).toEqual({ message: 'success' });
   });
 });

@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { DataSource } = require('apollo-datasource');
+const bcrypt = require('bcrypt');
 const autoBind = require('auto-bind');
 const { createToken, verifyUserToken } = require('../helpers/token');
 const { generateMailTemplate, sendMail } = require('../helpers/mail');
@@ -127,7 +128,7 @@ class User extends DataSource {
       text:
         'Your account is almost done. We only need to verify your email,Click the link below to verify your account',
       actionBtnText: 'Verify Account',
-      actionBtnLink: `${process.env.CLIENT_URL}/${token}`
+      actionBtnLink: `${process.env.CLIENT_URL}/verify_account/${token}`
     });
 
     const msg = {
@@ -156,6 +157,41 @@ class User extends DataSource {
         token: authToken
       };
     }
+    return false;
+  }
+
+  async sendResetPasswordEmail(email) {
+    const user = await this.models.User.findOne({ where: { email } });
+    if (!user) return null;
+    const token = createToken({ __uuid: user.id });
+    const template = await generateMailTemplate({
+      receiverName: user.username,
+      intro: 'Password Reset',
+      text:
+        'You recently requested for password reset. If this is you, kindly click the link below to reset your password.',
+      actionBtnText: 'Reset Password',
+      actionBtnLink: `${process.env.CLIENT_URL}/password_reset/${token}`
+    });
+
+    const msg = {
+      to: user.email,
+      from: process.env.MAIL_FROM,
+      subject: 'Password Reset',
+      html: template
+    };
+    const sent = await sendMail(msg);
+    if (sent) return { message: 'Password Reset link sent successfully' };
+    return false;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async resetPassword(userData) {
+    const { newPassword, token } = userData;
+    const user = await verifyUserToken(token);
+    if (!user) return false;
+    const hashedPassword = await bcrypt.hashSync(newPassword, 10);
+    const isUpdated = await user.update({ password: hashedPassword });
+    if (isUpdated) return { message: 'Password updated successfully' };
     return false;
   }
 }

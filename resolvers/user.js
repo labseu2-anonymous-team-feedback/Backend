@@ -1,5 +1,5 @@
 const { combineResolvers } = require('graphql-resolvers');
-const { AuthenticationError } = require('apollo-server-express');
+const { AuthenticationError, ApolloError } = require('apollo-server-express');
 const { validateSignup } = require('../validations');
 
 module.exports = {
@@ -90,6 +90,34 @@ module.exports = {
       const response = User.verifyAccount(token);
       if (!response) {
         throw new AuthenticationError('Invalid verification link');
+      }
+      return response;
+    },
+    async sendResetPasswordEmail(
+      root,
+      { email },
+      {
+        dataSources: { User }
+      }
+    ) {
+      const response = await User.sendResetPasswordEmail(email);
+      if (!response) {
+        throw new ApolloError(
+          'The user with the specified email address does not exist'
+        );
+      }
+      return response;
+    },
+    async resetPassword(
+      root,
+      args,
+      {
+        dataSources: { User }
+      }
+    ) {
+      const response = await User.resetPassword(args);
+      if (!response) {
+        throw new ApolloError('Password reset failed, please try again');
       }
       return response;
     }

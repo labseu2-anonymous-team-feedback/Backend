@@ -22,8 +22,15 @@ const userTypes = gql`
     ): createAccountResponse
     authGoogle: AuthResponse
     verifyAccount(token: String!): LoginResponse!
+    sendResetPasswordEmail(email: String!): SendResetPasswordEmailResponse!
+    resetPassword(
+      newPassword: String!
+      token: String!
+    ): SendResetPasswordEmailResponse!
   }
-
+  type SendResetPasswordEmailResponse {
+    message: String!
+  }
   type LoginResponse {
     id: String
     username: String
