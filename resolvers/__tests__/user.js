@@ -21,7 +21,8 @@ describe('User Resolver', () => {
     createAccount,
     userLogin,
     verifyAccount,
-    sendResetPasswordEmail
+    sendResetPasswordEmail,
+    resetPassword
   } = User;
   it('should get All users', async () => {
     getAllUsers.mockReturnValueOnce([
@@ -119,5 +120,27 @@ describe('User Resolver', () => {
       mockContext
     );
     expect(res).toEqual({ message: 'email sent' });
+  });
+  it('should throw error if reset password token is invalid', async () => {
+    try {
+      await resolver.Mutation.resetPassword(
+        null,
+        { email: 'test@example.com', token: 'invalidtoken' },
+        mockContext
+      );
+    } catch (error) {
+      expect(error).toEqual(
+        new ApolloError('Password reset failed, please try again')
+      );
+    }
+  });
+  it('should reset password if token is valid', async () => {
+    resetPassword.mockReturnValueOnce({ message: 'success' });
+    const res = await resolver.Mutation.resetPassword(
+      null,
+      { email: 'test@example.com' },
+      mockContext
+    );
+    expect(res).toEqual({ message: 'success' });
   });
 });
