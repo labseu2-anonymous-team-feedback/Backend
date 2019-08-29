@@ -44,7 +44,7 @@ app.get(
     scope: ['profile', 'email']
   }),
   (req, res) => {
-    res.redirect('/');
+    res.redirect('https://staging-atf.herokuapp.com/register?google=true');
     app.locals.profile = req.user.profile;
   }
 );
