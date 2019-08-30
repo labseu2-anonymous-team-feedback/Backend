@@ -18,6 +18,7 @@ class User extends DataSource {
   }
 
   initialize({ context }) {
+    console.log('++++++++++=', context);
     this.models = context.models;
   }
 
@@ -92,18 +93,17 @@ class User extends DataSource {
    * @returns
    * @memberof User
    */
-  async GoogleUser(profile) {
+  async GoogleUser({ displayName, familyName, givenName, emails, id }) {
     const user = await this.models.User.findOne({
-      where: { email: profile.emails[0].value },
+      where: { email: emails[0].value },
       attributes: ['id', 'username', 'email']
     });
     // no user was found, lets create a new one
     if (!user) {
       const newUser = await this.models.User.create({
-        username:
-          profile.displayName || `${profile.familyName} ${profile.givenName}`,
-        email: profile.emails[0].value,
-        password: profile.id
+        username: displayName || `${familyName} ${givenName}`,
+        email: emails[0].value,
+        password: id
       });
       const token = await createToken({
         __uuid: newUser.get().id,

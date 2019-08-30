@@ -8,7 +8,8 @@
     "dev": "nodemon index.js",
     "migrate": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate",
     "seed": "npx sequelize-cli db:seed:undo:all && npx sequelize-cli db:seed:all",
-    "test": "jest --detectOpenHandles --testTimeout=10000 --forceExit",
+    "test": "set NODE_ENV=test&&jest --detectOpenHandles --testTimeout=10000 --forceExit",
+    "test-migrate": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate --env test",
     "coverage": "jest --coverage --detectOpenHandles --testTimeout=10000 && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
