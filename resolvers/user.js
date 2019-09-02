@@ -4,16 +4,6 @@ const { validateSignup } = require('../validations');
 
 module.exports = {
   Query: {
-    /**
-     * Get All Users in database
-     *
-     * @param {*} root
-     * @param {*} args
-     * @param {*} {
-     *         dataSources: { User }
-     *       }
-     * @returns
-     */
     async getAllUsers(
       root,
       args,
@@ -24,16 +14,6 @@ module.exports = {
       const users = await User.getAllUsers();
       return users;
     },
-    /**
-     * Get user by id
-     *
-     * @param {*} root
-     * @param {*} args
-     * @param {*} {
-     *         dataSources: { User }
-     *       }
-     * @returns
-     */
     async getUserById(
       root,
       args,
@@ -55,7 +35,11 @@ module.exports = {
     createAccount: combineResolvers(
       validateSignup,
       async (root, userData, { dataSources: { User } }) => {
-        return User.createAccount(userData);
+        const res = await User.createAccount(userData);
+        if (!res) {
+          throw new ApolloError('User with the email or username already exists');
+        }
+        return res;
       }
     ),
     userLogin: combineResolvers(
@@ -67,7 +51,7 @@ module.exports = {
       }
     ),
     /**
-     *
+     * Google Authentication Signup and Login
      *
      * @param {*} root
      * @param {*} args
@@ -100,9 +84,10 @@ module.exports = {
         return error;
       }
     },
+
     /**
-     * verify users email
      *
+     * Email Verification
      * @param {*} root
      * @param {*} { token }
      * @param {*} {
@@ -124,7 +109,7 @@ module.exports = {
       return response;
     },
     /**
-     * send email to user to reset password
+     * Password Reset Mailer
      *
      * @param {*} root
      * @param {*} { email }
@@ -148,8 +133,9 @@ module.exports = {
       }
       return response;
     },
+
     /**
-     * reset user password
+     * Reset Password
      *
      * @param {*} root
      * @param {*} args
