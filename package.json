@@ -10,6 +10,7 @@
     "seed": "npx sequelize-cli db:seed:undo:all && npx sequelize-cli db:seed:all",
     "test": "set NODE_ENV=test&&jest --detectOpenHandles --testTimeout=10000 --forceExit",
     "test-migrate": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate --env test",
+    "test-seed": "npx sequelize-cli db:seed:undo:all && npx sequelize-cli db:seed:all --env test",
     "coverage": "jest --coverage --detectOpenHandles --testTimeout=10000 && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
@@ -48,6 +49,7 @@
     "express": "^4.17.1",
     "graphql": "^14.4.2",
     "graphql-resolvers": "^0.3.3",
+    "graphql-tag": "^2.10.1",
     "helmet": "^3.20.0",
     "jsonwebtoken": "^8.5.1",
     "mailgen": "^2.0.8",

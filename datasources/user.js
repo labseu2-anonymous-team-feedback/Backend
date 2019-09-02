@@ -18,7 +18,6 @@ class User extends DataSource {
   }
 
   initialize({ context }) {
-    console.log('++++++++++=', context);
     this.models = context.models;
   }
 

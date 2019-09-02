@@ -53,20 +53,21 @@ const dataSources = () => ({
   User: new UserAPI(),
   Survey: new SurveyAPI()
 });
+const context = async ({ req }) => {
+  const token = (req.headers && req.headers.authorization) || '';
+  const user = await verifyUserToken(token);
+  const userData = user && user.get();
+  return {
+    models,
+    app,
+    user: userData
+  };
+};
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: async ({ req }) => {
-    const token = (req.headers && req.headers.authorization) || '';
-    const user = await verifyUserToken(token);
-    const userData = user && user.get();
-    return {
-      models,
-      app,
-      user: userData
-    };
-  },
+  context,
   dataSources,
   introspection: true,
   playground: true,
@@ -79,5 +80,13 @@ server.applyMiddleware({ app });
 
 module.exports = {
   app,
-  graphqlPath: server.graphqlPath
+  server,
+  graphqlPath: server.graphqlPath,
+  dataSources,
+  context,
+  UserAPI,
+  SurveyAPI,
+  typeDefs,
+  resolvers,
+  models
 };
