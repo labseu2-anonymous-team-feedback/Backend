@@ -1,6 +1,6 @@
 const { combineResolvers } = require('graphql-resolvers');
 const { AuthenticationError, ApolloError } = require('apollo-server-express');
-const { validateSignup, validateLogin } = require('../validations');
+const { validateSignup, validatePasswordLength } = require('../validations');
 
 module.exports = {
   Query: {
@@ -45,7 +45,6 @@ module.exports = {
       }
     ),
     userLogin: combineResolvers(
-      validateLogin,
       async (root, args, { dataSources: { User } }) => {
         const user = await User.userLogin(args);
         if (!user) throw new Error('Invalid email or password');
@@ -146,18 +145,16 @@ module.exports = {
      *       }
      * @returns
      */
-    async resetPassword(
-      root,
-      args,
-      {
-        dataSources: { User }
+
+    resetPassword: combineResolvers(
+      validatePasswordLength,
+      async (root, args, { dataSources: { User } }) => {
+        const response = await User.resetPassword(args);
+        if (!response) {
+          throw new ApolloError('Password reset failed, please try again');
+        }
+        return response;
       }
-    ) {
-      const response = await User.resetPassword(args);
-      if (!response) {
-        throw new ApolloError('Password reset failed, please try again');
-      }
-      return response;
-    }
+    )
   }
 };

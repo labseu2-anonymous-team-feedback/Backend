@@ -123,7 +123,6 @@ class User extends DataSource {
       __uuid: user.get().id,
       username: user.get().username
     });
-    console.log('++++++++++=', user.get());
     return { ...user.get(), token };
   }
 
