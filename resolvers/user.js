@@ -4,6 +4,16 @@ const { validateSignup } = require('../validations');
 
 module.exports = {
   Query: {
+    /**
+     * Get All Users in database
+     *
+     * @param {*} root
+     * @param {*} args
+     * @param {*} {
+     *         dataSources: { User }
+     *       }
+     * @returns
+     */
     async getAllUsers(
       root,
       args,
@@ -14,6 +24,16 @@ module.exports = {
       const users = await User.getAllUsers();
       return users;
     },
+    /**
+     * Get user by id
+     *
+     * @param {*} root
+     * @param {*} args
+     * @param {*} {
+     *         dataSources: { User }
+     *       }
+     * @returns
+     */
     async getUserById(
       root,
       args,
@@ -80,6 +100,16 @@ module.exports = {
         return error;
       }
     },
+    /**
+     * verify users email
+     *
+     * @param {*} root
+     * @param {*} { token }
+     * @param {*} {
+     *         dataSources: { User }
+     *       }
+     * @returns
+     */
     async verifyAccount(
       root,
       { token },
@@ -93,6 +123,16 @@ module.exports = {
       }
       return response;
     },
+    /**
+     * send email to user to reset password
+     *
+     * @param {*} root
+     * @param {*} { email }
+     * @param {*} {
+     *         dataSources: { User }
+     *       }
+     * @returns
+     */
     async sendResetPasswordEmail(
       root,
       { email },
@@ -108,6 +148,16 @@ module.exports = {
       }
       return response;
     },
+    /**
+     * reset user password
+     *
+     * @param {*} root
+     * @param {*} args
+     * @param {*} {
+     *         dataSources: { User }
+     *       }
+     * @returns
+     */
     async resetPassword(
       root,
       args,

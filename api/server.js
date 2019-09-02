@@ -48,7 +48,10 @@ app.get(
     app.locals.profile = req.user.profile;
   }
 );
-
+/**
+ * create instance of UserAPI and SurveyAPI
+ *
+ */
 const dataSources = () => ({
   User: new UserAPI(),
   Survey: new SurveyAPI()
