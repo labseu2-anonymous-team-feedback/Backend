@@ -46,6 +46,7 @@ app.get(
   (req, res) => {
     res.redirect(process.env.REDIRECT_URL);
     app.locals.profile = req.user.profile;
+    // console.log('========', app.locals.profile.photos[0].value);
   }
 );
 /**

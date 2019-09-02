@@ -48,6 +48,7 @@ const userTypes = gql`
     id: String
     username: String
     email: String
+    profileImage: String
     token: String
   }
 `;
