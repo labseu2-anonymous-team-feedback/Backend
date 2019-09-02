@@ -1,4 +1,5 @@
 require('dotenv').config();
+const { Op } = require('sequelize');
 const { DataSource } = require('apollo-datasource');
 const bcrypt = require('bcrypt');
 const autoBind = require('auto-bind');
@@ -17,12 +18,6 @@ class User extends DataSource {
     autoBind(this);
   }
 
-  /**
-   *
-   *
-   * @param {*} { context }
-   * @memberof User
-   */
   initialize({ context }) {
     this.models = context.models;
   }
@@ -35,11 +30,18 @@ class User extends DataSource {
    * @memberof User
    */
   async createAccount(userData) {
-    const user = await this.models.User.create({
-      ...userData
+    const { email, username }= userData;
+    const [user, created] = await this.models.User.findOrCreate({
+      where: {
+        [Op.or]: [{ username }, { email }],
+      },
+      defaults: userData
     });
-    await this.sendVerificationMail(user.get());
-    return user;
+    if (created) {
+      await this.sendVerificationMail(user.get());
+      return user;
+    }
+    return false;
   }
 
   /**
@@ -92,24 +94,23 @@ class User extends DataSource {
   }
 
   /**
-   *
+   * Google Authentication Database query
    *
    * @param {*} profile
    * @returns
    * @memberof User
    */
-  async GoogleUser(profile) {
+  async GoogleUser({ displayName, familyName, givenName, emails, id }) {
     const user = await this.models.User.findOne({
-      where: { email: profile.emails[0].value },
+      where: { email: emails[0].value },
       attributes: ['id', 'username', 'email']
     });
     // no user was found, lets create a new one
     if (!user) {
       const newUser = await this.models.User.create({
-        username:
-          profile.displayName || `${profile.familyName} ${profile.givenName}`,
-        email: profile.emails[0].value,
-        password: profile.id
+        username: displayName || `${familyName} ${givenName}`,
+        email: emails[0].value,
+        password: id
       });
       const token = await createToken({
         __uuid: newUser.get().id,
@@ -124,13 +125,6 @@ class User extends DataSource {
     return { ...user.get(), token };
   }
 
-  /**
-   * Query database to send verification email
-   *
-   * @param {*} user
-   * @returns
-   * @memberof User
-   */
   // eslint-disable-next-line class-methods-use-this
   async sendVerificationMail(user) {
     const { id, username, email } = user;
@@ -173,13 +167,6 @@ class User extends DataSource {
     return false;
   }
 
-  /**
-   *
-   *
-   * @param {*} email
-   * @returns msg if reset password link is sent successfully
-   * @memberof User
-   */
   async sendResetPasswordEmail(email) {
     const user = await this.models.User.findOne({ where: { email } });
     if (!user) return null;
@@ -204,13 +191,6 @@ class User extends DataSource {
     return false;
   }
 
-  /**
-   *
-   *
-   * @param {*} userData
-   * @returns msg if password is reset succesfully
-   * @memberof User
-   */
   // eslint-disable-next-line class-methods-use-this
   async resetPassword(userData) {
     const { newPassword, token } = userData;
