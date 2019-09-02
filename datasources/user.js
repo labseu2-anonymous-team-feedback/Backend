@@ -30,10 +30,10 @@ class User extends DataSource {
    * @memberof User
    */
   async createAccount(userData) {
-    const { email, username }= userData;
+    const { email, username } = userData;
     const [user, created] = await this.models.User.findOrCreate({
       where: {
-        [Op.or]: [{ username }, { email }],
+        [Op.or]: [{ username }, { email }]
       },
       defaults: userData
     });
@@ -125,6 +125,13 @@ class User extends DataSource {
     return { ...user.get(), token };
   }
 
+  /**
+   *
+   *
+   * @param {*} user
+   * @returns
+   * @memberof User
+   */
   // eslint-disable-next-line class-methods-use-this
   async sendVerificationMail(user) {
     const { id, username, email } = user;
@@ -167,6 +174,13 @@ class User extends DataSource {
     return false;
   }
 
+  /**
+   *
+   *
+   * @param {*} email
+   * @returns
+   * @memberof User
+   */
   async sendResetPasswordEmail(email) {
     const user = await this.models.User.findOne({ where: { email } });
     if (!user) return null;
@@ -191,6 +205,13 @@ class User extends DataSource {
     return false;
   }
 
+  /**
+   *
+   *
+   * @param {*} userData
+   * @returns
+   * @memberof User
+   */
   // eslint-disable-next-line class-methods-use-this
   async resetPassword(userData) {
     const { newPassword, token } = userData;

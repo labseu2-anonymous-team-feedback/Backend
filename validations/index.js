@@ -40,6 +40,25 @@ const validateSurvey = (parent, { input }, ctx) => {
  * @returns
  */
 const validateSignup = (parent, args, ctx) => {
+  const { password, username } = args;
+  if (password.length < 8) {
+    throw new UserInputError('Password must be at least 8 characters long', {
+      invalidArgs: 'password'
+    });
+  }
+
+  if (username.length < 3 || username.length > 30) {
+    throw new UserInputError(
+      'Username must be between 3 to 30 characters long',
+      {
+        invalidArgs: 'username'
+      }
+    );
+  }
+  return skip;
+};
+
+const validateLogin = (parent, args, ctx) => {
   const { password } = args;
   if (password.length < 8) {
     throw new UserInputError('Password must be at least 8 characters long', {
@@ -51,5 +70,6 @@ const validateSignup = (parent, args, ctx) => {
 
 module.exports = {
   validateSurvey,
-  validateSignup
+  validateSignup,
+  validateLogin
 };

@@ -1,6 +1,6 @@
 const { combineResolvers } = require('graphql-resolvers');
 const { AuthenticationError, ApolloError } = require('apollo-server-express');
-const { validateSignup } = require('../validations');
+const { validateSignup, validateLogin } = require('../validations');
 
 module.exports = {
   Query: {
@@ -37,13 +37,15 @@ module.exports = {
       async (root, userData, { dataSources: { User } }) => {
         const res = await User.createAccount(userData);
         if (!res) {
-          throw new ApolloError('User with the email or username already exists');
+          throw new ApolloError(
+            'User with the email or username already exists'
+          );
         }
         return res;
       }
     ),
     userLogin: combineResolvers(
-      validateSignup,
+      validateLogin,
       async (root, args, { dataSources: { User } }) => {
         const user = await User.userLogin(args);
         if (!user) throw new Error('Invalid email or password');
