@@ -1,4 +1,5 @@
 require('dotenv').config();
+const { Op } = require('sequelize');
 const { DataSource } = require('apollo-datasource');
 const bcrypt = require('bcrypt');
 const autoBind = require('auto-bind');
@@ -29,11 +30,18 @@ class User extends DataSource {
    * @memberof User
    */
   async createAccount(userData) {
-    const user = await this.models.User.create({
-      ...userData
+    const { email, username }= userData;
+    const [user, created] = await this.models.User.findOrCreate({
+      where: {
+        [Op.or]: [{ username }, { email }],
+      },
+      defaults: userData
     });
-    await this.sendVerificationMail(user.get());
-    return user;
+    if (created) {
+      await this.sendVerificationMail(user.get());
+      return user;
+    }
+    return false;
   }
 
   /**

@@ -35,7 +35,11 @@ module.exports = {
     createAccount: combineResolvers(
       validateSignup,
       async (root, userData, { dataSources: { User } }) => {
-        return User.createAccount(userData);
+        const res = await User.createAccount(userData);
+        if (!res) {
+          throw new ApolloError('User with the email or username already exists');
+        }
+        return res;
       }
     ),
     userLogin: combineResolvers(
