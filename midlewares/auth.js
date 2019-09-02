@@ -1,6 +1,13 @@
 const { skip } = require('graphql-resolvers');
 const { AuthenticationError } = require('apollo-server-express');
-
+/**
+ *
+ *
+ * @param {*} parent
+ * @param {*} args
+ * @param {*} { user }
+ * @returns
+ */
 const isAuthenticated = (parent, args, { user }) => {
   if (!user) {
     throw new AuthenticationError(

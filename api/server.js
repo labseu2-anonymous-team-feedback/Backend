@@ -44,11 +44,14 @@ app.get(
     scope: ['profile', 'email']
   }),
   (req, res) => {
-    res.redirect('https://staging-atf.herokuapp.com/register?google=true');
+    res.redirect(process.env.REDIRECT_URL);
     app.locals.profile = req.user.profile;
   }
 );
-
+/**
+ * create instance of UserAPI and SurveyAPI
+ *
+ */
 const dataSources = () => ({
   User: new UserAPI(),
   Survey: new SurveyAPI()
