@@ -11,6 +11,11 @@ const {
 } = require('../api/server');
 /**
  * Integration testing utils
+/**
+ *
+ *
+ * @param {*} [{ context = defaultContext }={}]
+ * @returns
  */
 const constructTestServer = ({ context = defaultContext } = {}) => {
   const User = new UserAPI();

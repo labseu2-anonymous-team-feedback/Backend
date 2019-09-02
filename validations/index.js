@@ -1,7 +1,14 @@
 const { skip } = require('graphql-resolvers');
 const { UserInputError } = require('apollo-server-express');
 
-// eslint-disable-next-line no-unused-vars
+/**
+ *
+ *
+ * @param {*} parent
+ * @param {*} { input }
+ * @param {*} ctx
+ * @returns
+ */
 const validateSurvey = (parent, { input }, ctx) => {
   const { title, questions } = input;
   if (!title) {
@@ -24,7 +31,14 @@ const validateSurvey = (parent, { input }, ctx) => {
   return skip;
 };
 
-// eslint-disable-next-line no-unused-vars
+/**
+ *
+ *
+ * @param {*} parent
+ * @param {*} args
+ * @param {*} ctx
+ * @returns
+ */
 const validateSignup = (parent, args, ctx) => {
   const { password } = args;
   if (password.length < 8) {

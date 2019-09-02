@@ -47,7 +47,7 @@ module.exports = {
       }
     ),
     /**
-     *
+     * Google Authentication Signup and Login
      *
      * @param {*} root
      * @param {*} args
@@ -80,6 +80,17 @@ module.exports = {
         return error;
       }
     },
+
+    /**
+     *
+     * Email Verification
+     * @param {*} root
+     * @param {*} { token }
+     * @param {*} {
+     *         dataSources: { User }
+     *       }
+     * @returns
+     */
     async verifyAccount(
       root,
       { token },
@@ -93,6 +104,16 @@ module.exports = {
       }
       return response;
     },
+    /**
+     * Password Reset Mailer
+     *
+     * @param {*} root
+     * @param {*} { email }
+     * @param {*} {
+     *         dataSources: { User }
+     *       }
+     * @returns
+     */
     async sendResetPasswordEmail(
       root,
       { email },
@@ -108,6 +129,17 @@ module.exports = {
       }
       return response;
     },
+
+    /**
+     * Reset Password
+     *
+     * @param {*} root
+     * @param {*} args
+     * @param {*} {
+     *         dataSources: { User }
+     *       }
+     * @returns
+     */
     async resetPassword(
       root,
       args,

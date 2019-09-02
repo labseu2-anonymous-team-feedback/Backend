@@ -86,7 +86,7 @@ class User extends DataSource {
   }
 
   /**
-   *
+   * Google Authentication Database query
    *
    * @param {*} profile
    * @returns
