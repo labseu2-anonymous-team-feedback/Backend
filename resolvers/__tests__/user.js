@@ -125,7 +125,11 @@ describe('User Resolver', () => {
     try {
       await resolver.Mutation.resetPassword(
         null,
-        { email: 'test@example.com', token: 'invalidtoken' },
+        {
+          email: 'test@example.com',
+          token: 'invalidtoken',
+          newPassword: 'somenewpassord'
+        },
         mockContext
       );
     } catch (error) {
@@ -138,7 +142,7 @@ describe('User Resolver', () => {
     resetPassword.mockReturnValueOnce({ message: 'success' });
     const res = await resolver.Mutation.resetPassword(
       null,
-      { email: 'test@example.com' },
+      { token: 'somerandomtoken', newPassword: 'newpassword' },
       mockContext
     );
     expect(res).toEqual({ message: 'success' });

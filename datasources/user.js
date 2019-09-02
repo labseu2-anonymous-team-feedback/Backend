@@ -100,17 +100,18 @@ class User extends DataSource {
    * @returns
    * @memberof User
    */
-  async GoogleUser({ displayName, familyName, givenName, emails, id }) {
+  async GoogleUser({ displayName, familyName, givenName, emails, id, photos }) {
     const user = await this.models.User.findOne({
       where: { email: emails[0].value },
-      attributes: ['id', 'username', 'email']
+      attributes: ['id', 'username', 'email', 'profileImage']
     });
     // no user was found, lets create a new one
     if (!user) {
       const newUser = await this.models.User.create({
         username: displayName || `${familyName} ${givenName}`,
         email: emails[0].value,
-        password: id
+        password: id,
+        profileImage: photos[0].value
       });
       const token = await createToken({
         __uuid: newUser.get().id,

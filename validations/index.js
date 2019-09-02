@@ -41,7 +41,7 @@ const validateSurvey = (parent, { input }, ctx) => {
  */
 const validateSignup = (parent, args, ctx) => {
   const { password, username } = args;
-  if (password.length < 8) {
+  if (password.length < 6) {
     throw new UserInputError('Password must be at least 8 characters long', {
       invalidArgs: 'password'
     });
@@ -58,10 +58,10 @@ const validateSignup = (parent, args, ctx) => {
   return skip;
 };
 
-const validateLogin = (parent, args, ctx) => {
-  const { password } = args;
-  if (password.length < 8) {
-    throw new UserInputError('Password must be at least 8 characters long', {
+const validatePasswordLength = (parent, args, ctx) => {
+  const { newPassword } = args;
+  if (newPassword.length < 6) {
+    throw new UserInputError('Password must be at least 6 characters long', {
       invalidArgs: 'password'
     });
   }
@@ -71,5 +71,5 @@ const validateLogin = (parent, args, ctx) => {
 module.exports = {
   validateSurvey,
   validateSignup,
-  validateLogin
+  validatePasswordLength
 };
