@@ -5,20 +5,20 @@ const feedbackTypes = gql`
     getSurveyFeedback(surveyId: String!): [Feedback!]!
   }
   type Feedback {
-    id: String!
+    id: String
     userId: String
     surveyId: String!
     questionId: String!
     comment: String
-    rating: Int
+    rating: String
   }
   input FeedbackInput {
-    id: String!
+    id: String
     userId: String
     surveyId: String!
     questionId: String!
     comment: String
-    rating: Int
+    rating: String
   }
 
   type Mutation {

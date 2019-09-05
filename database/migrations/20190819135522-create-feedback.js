@@ -8,10 +8,13 @@ module.exports = {
         type: Sequelize.UUID
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
+      },
+      surveyId: {
+        type: Sequelize.STRING
       },
       questionId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       comment: {
         type: Sequelize.TEXT

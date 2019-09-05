@@ -6,8 +6,8 @@ module.exports = {
   Query: {
     getSurveyFeedback: combineResolvers(
       isAuthenticated,
-      async (_, { feedbackId }, { dataSources: { Feedback }, user }) => {
-        const feedback = await Feedback.getFeedbackSurvey(feedbackId);
+      async (_, { surveyId }, { dataSources: { Feedback } }) => {
+        const feedback = await Feedback.getFeedback(surveyId);
         return feedback;
       }
     )
@@ -15,9 +15,18 @@ module.exports = {
 
   Mutation: {
     saveFeedback: combineResolvers(
-      validateFeedback,
-      async (_, feedbackData, { dataSources: { Feedback }, user }) => {
-        return Feedback.createFeedback(feedbackData.input);
+      // validateFeedback,
+      async (_, feedbackData, { dataSources: { Feedback } }) => {
+        console.log("Resolvers - feedbackInput", feedbackData.input);
+        const feedback = await Feedback.createFeedback(feedbackData.input);
+        if (feedback) {
+          return {
+            message: "Feedback received, thank you!"
+          };
+        }
+        return {
+          message: "failed"
+        };
       }
     )
   }
