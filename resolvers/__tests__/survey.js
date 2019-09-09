@@ -6,7 +6,8 @@ describe('Survey Resolver', () => {
     dataSources: {
       Survey: {
         getUserSurveys: jest.fn(),
-        createSurvey: jest.fn()
+        createSurvey: jest.fn(),
+        getSurveyDetails: jest.fn()
       }
     },
     user: {
@@ -17,13 +18,14 @@ describe('Survey Resolver', () => {
     dataSources: {
       Survey: {
         getUserSurveys: jest.fn(),
-        createSurvey: jest.fn()
+        createSurvey: jest.fn(),
+        getSurveyDetails: jest.fn()
       }
     },
     user: null
   };
   const { Survey } = authMockContext.dataSources;
-  const { getUserSurveys, createSurvey } = Survey;
+  const { getUserSurveys, createSurvey, getSurveyDetails } = Survey;
 
   getUserSurveys.mockReturnValueOnce([
     { id: '089de619-981c' },
@@ -120,6 +122,26 @@ describe('Survey Resolver', () => {
     expect(res).toEqual({
       id: '089de619-981c43',
       title: 'test survey'
+    });
+  });
+
+  it('should get survey details', async () => {
+    const args = {
+      surveyId: '1jnk123bjk121'
+    };
+    getSurveyDetails.mockReturnValueOnce({
+      title: 'New Survey',
+      questions: [{ question: 'Why me' }]
+    });
+
+    const res = await resolver.Query.getSurveyDetails(
+      null,
+      args,
+      authMockContext
+    );
+    expect(res).toEqual({
+      title: 'New Survey',
+      questions: [{ question: 'Why me' }]
     });
   });
 });
