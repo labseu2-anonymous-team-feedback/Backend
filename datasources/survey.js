@@ -46,7 +46,6 @@ class Survey extends DataSource {
         }
       ]
     });
-    console.log(survey.questions.dataValues)
     return survey.questions;
   }
 }
