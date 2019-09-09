@@ -7,6 +7,7 @@ const resolvers = require('../resolvers');
 const models = require('../database/models');
 const UserAPI = require('../datasources/user');
 const SurveyAPI = require('../datasources/survey');
+const FeedbackAPI = require('../datasources/feedback');
 const { verifyUserToken } = require('../helpers/token');
 require('dotenv').config();
 
@@ -55,7 +56,8 @@ app.get(
  */
 const dataSources = () => ({
   User: new UserAPI(),
-  Survey: new SurveyAPI()
+  Survey: new SurveyAPI(),
+  Feedback: new FeedbackAPI()
 });
 
 const server = new ApolloServer({

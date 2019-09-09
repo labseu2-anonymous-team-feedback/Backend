@@ -2,13 +2,20 @@ module.exports = (sequelize, DataTypes) => {
   const Feedback = sequelize.define(
     'Feedback',
     {
-      userId: DataTypes.INTEGER,
-      questionId: DataTypes.INTEGER,
+      id: {
+        allowNull: false,
+        primaryKey: true,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4
+      },
+      userId: DataTypes.STRING,
+      surveyId: DataTypes.STRING,
+      questionId: DataTypes.STRING,
       comment: DataTypes.TEXT
     },
     {}
   );
-  Feedback.associate = (models) => {
+  Feedback.associate = (models) => { // eslint-disable-line
     // associations can be defined here
   };
   return Feedback;
