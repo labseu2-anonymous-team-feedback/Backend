@@ -12,10 +12,16 @@ module.exports = {
       }
     ),
     getSurveyQuestions: combineResolvers(
-      isAuthenticated,
       async (_, { surveyId }, { dataSources: { Survey } }) => {
         const questions = await Survey.getSurveyQuestions(surveyId);
         return questions;
+      }
+    ),
+    getSurveyFeedback: combineResolvers(
+      isAuthenticated,
+      async (_, { surveyId }, { dataSources: { Survey } }) => {
+        const feedback = await Survey.getSurveyFeedback(surveyId);
+        return feedback;
       }
     )
   },

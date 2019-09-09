@@ -19,6 +19,9 @@ module.exports = {
       comment: {
         type: Sequelize.TEXT
       },
+      rating: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
