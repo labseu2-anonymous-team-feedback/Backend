@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       surveyId: DataTypes.STRING,
       questionId: DataTypes.STRING,
       comment: DataTypes.TEXT,
-      rating: DataTypes.INTEGER
+      rating: DataTypes.STRING
     },
     {}
   );

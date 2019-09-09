@@ -20,7 +20,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       rating: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
