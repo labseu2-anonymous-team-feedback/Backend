@@ -16,7 +16,7 @@ module.exports = {
   Mutation: {
     saveFeedback: combineResolvers(
       // validateFeedback,
-      async (_, feedbackData, { dataSources: { Feedback } }) => {
+      async (_, feedbackData, { dataSources: { Feedback } }) => { console.log(feedbackData)
         const feedback = await Feedback.createFeedback(feedbackData.input);
         if (feedback) {
           return {
