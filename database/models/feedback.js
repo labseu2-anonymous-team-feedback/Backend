@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  Feedback.associate = (models) => {
+  Feedback.associate = (models) => { // eslint-disable-line
     // associations can be defined here
   };
   return Feedback;

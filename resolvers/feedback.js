@@ -17,15 +17,14 @@ module.exports = {
     saveFeedback: combineResolvers(
       // validateFeedback,
       async (_, feedbackData, { dataSources: { Feedback } }) => {
-        console.log("Resolvers - feedbackInput", feedbackData.input);
         const feedback = await Feedback.createFeedback(feedbackData.input);
         if (feedback) {
           return {
-            message: "Feedback received, thank you!"
+            message: 'Feedback received, thank you!'
           };
         }
         return {
-          message: "failed"
+          message: 'failed'
         };
       }
     )

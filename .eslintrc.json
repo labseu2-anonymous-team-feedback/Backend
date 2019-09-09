@@ -17,6 +17,6 @@
   "rules": {
     "no-unused-vars": "warn",
     "consistent-return": "off",
-    "prettier/prettier": ["off"]
+    "prettier/prettier": ["error"]
   }
 }

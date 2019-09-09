@@ -57,7 +57,7 @@ app.get(
 const dataSources = () => ({
   User: new UserAPI(),
   Survey: new SurveyAPI(),
-  Feedback: new FeedbackAPI(),
+  Feedback: new FeedbackAPI()
 });
 
 const server = new ApolloServer({
