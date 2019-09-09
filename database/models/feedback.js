@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
       userId: DataTypes.STRING,
       surveyId: DataTypes.STRING,
       questionId: DataTypes.STRING,
-      comment: DataTypes.TEXT
+      comment: DataTypes.TEXT,
+      rating: DataTypes.INTEGER
     },
     {}
   );
