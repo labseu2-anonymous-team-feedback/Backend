@@ -11,9 +11,9 @@ module.exports = {
         return surveys;
       }
     ),
-    getSurveyQuestions: combineResolvers(
+    getSurveyDetails: combineResolvers(
       async (_, { surveyId }, { dataSources: { Survey } }) => {
-        const questions = await Survey.getSurveyQuestions(surveyId);
+        const questions = await Survey.getSurveyDetails(surveyId);
         return questions;
       }
     ),
