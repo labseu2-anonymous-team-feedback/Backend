@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
   );
   Feedback.associate = (models) => { // eslint-disable-line
     // associations can be defined here
+    Feedback.belongsTo(models.Question, {
+      foreignKey: 'questionId',
+      as: 'question'
+    });
   };
   return Feedback;
 };
