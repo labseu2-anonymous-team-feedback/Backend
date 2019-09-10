@@ -6,7 +6,7 @@ module.exports = {
   Query: {
     getSurveyFeedback: combineResolvers(
       isAuthenticated,
-      isSurveyOwner,
+      // isSurveyOwner,
       async (_, { surveyId }, { dataSources: { Feedback } }) => {
         const feedback = await Feedback.getFeedback(surveyId);
         return feedback;
