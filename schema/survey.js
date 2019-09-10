@@ -4,7 +4,7 @@ const surveyTypes = gql`
   type Query {
     getUserSurveys: [Survey!]!
     getSurveyDetails(surveyId: String!): SurveyDetails!
-    getSurveyFeedback(surveyId: String!): [Feedback!]!
+    # getSurveyFeedback(surveyId: String!): [Feedback!]!
   }
   type Survey {
     id: String!
@@ -27,6 +27,7 @@ const surveyTypes = gql`
     question: String!
     type: String
     survey: Survey!
+    feedbacks: [Feedback!]!
   }
   input SurveyInput {
     """

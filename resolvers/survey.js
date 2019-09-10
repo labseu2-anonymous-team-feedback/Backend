@@ -46,6 +46,9 @@ module.exports = {
   Question: {
     survey(question) {
       return question.getSurvey();
+    },
+    feedbacks(question) {
+      return question.getFeedbacks();
     }
   }
 };

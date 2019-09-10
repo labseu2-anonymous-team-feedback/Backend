@@ -13,10 +13,10 @@ class Feedback extends DataSource {
   }
 
   async getFeedback(surveyId) {
-    const feedback = await this.models.Feedback.findAll({
-      where: { surveyId }
+    const survey = await this.models.Survey.findOne({
+      where: { id: surveyId }
     });
-    return feedback;
+    return survey;
   }
 
   async createFeedback(feedbackInput) {
