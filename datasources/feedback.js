@@ -35,6 +35,7 @@ class Feedback extends DataSource {
 
     const feedbackResponses = feedbackInput.responses.map(resp => ({
       ...resp,
+      userId: feedbackInput.userId,
       surveyId: feedbackInput.surveyId
     }));
     const result = await this.models.Feedback.bulkCreate(feedbackResponses);

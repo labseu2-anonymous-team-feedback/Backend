@@ -25,6 +25,7 @@ const feedbackTypes = gql`
   }
   input FeedbackInput {
     surveyId: String!
+    userId: String
     responses: [QuestionFeedback!]!
   }
   type FeedbackResponse {
