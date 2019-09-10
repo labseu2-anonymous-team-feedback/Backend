@@ -30,9 +30,6 @@ module.exports = {
     )
   },
   Feedback: {
-    author(feedback) {
-      return feedback.getAuthor();
-    },
     question(feedback) {
       return feedback.getQuestion();
     },

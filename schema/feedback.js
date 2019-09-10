@@ -6,7 +6,6 @@ const feedbackTypes = gql`
   }
   type Feedback {
     id: String
-    author: User!
     survey: Survey!
     question: Question!
     comment: String
