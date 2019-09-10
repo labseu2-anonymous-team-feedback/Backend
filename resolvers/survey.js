@@ -1,6 +1,6 @@
 const { combineResolvers } = require('graphql-resolvers');
 const { validateSurvey } = require('../validations');
-const { isAuthenticated } = require('../midlewares/auth');
+const { isAuthenticated, isSurveyOwner } = require('../midlewares/auth');
 
 module.exports = {
   Query: {
@@ -19,6 +19,7 @@ module.exports = {
     ),
     getSurveyFeedback: combineResolvers(
       isAuthenticated,
+      isSurveyOwner,
       async (_, { surveyId }, { dataSources: { Survey } }) => {
         const feedback = await Survey.getSurveyFeedback(surveyId);
         return feedback;

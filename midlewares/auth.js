@@ -17,6 +17,22 @@ const isAuthenticated = (parent, args, { user }) => {
   return skip;
 };
 
+/**
+ *
+ *
+ * @param {*} parent
+ * @param {*} args
+ * @param {*} { user }
+ * @returns
+ */
+const isSurveyOwner = (parent, args, { user }) => {
+  if (!user) {
+    throw new AuthenticationError('Authentication required');
+  }
+  return skip;
+};
+
 module.exports = {
-  isAuthenticated
+  isAuthenticated,
+  isSurveyOwner
 };
