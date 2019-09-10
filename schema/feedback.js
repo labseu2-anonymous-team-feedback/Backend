@@ -12,20 +12,20 @@ const feedbackTypes = gql`
     comment: String
     rating: String
   }
-  input FeedbackInput {
+  input QuestionFeedback {
     id: String
     userId: String
-    surveyId: String!
     questionId: String!
     comment: String
     rating: String
   }
 
   type Mutation {
-    saveFeedback(input: FeedbackInputArray!): FeedbackResponse!
+    saveFeedback(input: FeedbackInput!): FeedbackResponse!
   }
-  input FeedbackInputArray {
-    responses: [FeedbackInput!]!
+  input FeedbackInput {
+    surveyId: String!
+    responses: [QuestionFeedback!]!
   }
   type FeedbackResponse {
     message: String!
