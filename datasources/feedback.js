@@ -20,23 +20,24 @@ class Feedback extends DataSource {
   }
 
   async createFeedback(feedbackInput) {
-    if (
-      feedbackInput &&
-      feedbackInput.responses &&
-      feedbackInput.responses[0].surveyId
-    ) {
+    if (feedbackInput && feedbackInput.responses && feedbackInput.surveyId) {
       const survey = await this.models.Survey.findOne({
         where: {
-          id: feedbackInput.responses[0].surveyId
+          id: feedbackInput.surveyId
         }
       });
       if (!survey) {
         throw new UserInputError('Survey with that Id does not exist');
       }
+    } else {
+      throw new UserInputError('Please provide all required feedback data');
     }
-    const result = await this.models.Feedback.bulkCreate(
-      feedbackInput.responses
-    );
+
+    const feedbackResponses = feedbackInput.responses.map(resp => ({
+      ...resp,
+      surveyId: feedbackInput.surveyId
+    }));
+    const result = await this.models.Feedback.bulkCreate(feedbackResponses);
     return result;
   }
 }
