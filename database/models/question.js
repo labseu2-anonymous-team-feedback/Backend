@@ -19,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'surveyId',
       as: 'survey'
     });
+    Question.hasMany(models.Feedback, {
+      foreignKey: 'questionId',
+      as: 'feedbacks',
+      onDelete: 'CASCADE'
+    });
   };
   return Question;
 };

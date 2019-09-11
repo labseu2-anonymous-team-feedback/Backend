@@ -29,5 +29,13 @@ module.exports = {
         };
       }
     )
+  },
+  Feedback: {
+    question(feedback) {
+      return feedback.getQuestion();
+    },
+    survey(feedback) {
+      return feedback.getSurvey();
+    }
   }
 };
