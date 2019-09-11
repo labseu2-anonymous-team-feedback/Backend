@@ -8,9 +8,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4
       },
-      userId: DataTypes.STRING,
-      surveyId: DataTypes.STRING,
-      questionId: DataTypes.STRING,
+      userId: DataTypes.UUID,
+      surveyId: DataTypes.UUID,
+      questionId: DataTypes.UUID,
       comment: DataTypes.TEXT,
       rating: DataTypes.STRING
     },
@@ -18,6 +18,18 @@ module.exports = (sequelize, DataTypes) => {
   );
   Feedback.associate = (models) => { // eslint-disable-line
     // associations can be defined here
+    Feedback.belongsTo(models.User, {
+      foreignKey: 'userId',
+      as: 'author'
+    });
+    Feedback.belongsTo(models.Survey, {
+      foreignKey: 'surveyId',
+      as: 'survey'
+    });
+    Feedback.belongsTo(models.Question, {
+      foreignKey: 'questionId',
+      as: 'question'
+    });
   };
   return Feedback;
 };
