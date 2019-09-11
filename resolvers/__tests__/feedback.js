@@ -72,4 +72,22 @@ describe('Feedback Resolver', () => {
     );
     expect(res).toEqual(saveFeedbackResponse);
   });
+
+  it('should should get get question', async () => {
+    const Fn = jest.fn();
+    const feedback = new Fn();
+    feedback.getQuestion = jest.fn();
+    feedback.getQuestion.mockReturnValueOnce({ question: 'How am i doing' });
+    const res = await resolver.Feedback.question(feedback);
+    expect(res).toEqual({ question: 'How am i doing' });
+  });
+
+  it('should should get get survey', async () => {
+    const Fn = jest.fn();
+    const feedback = new Fn();
+    feedback.getSurvey = jest.fn();
+    feedback.getSurvey.mockReturnValueOnce({ title: 'Self Check' });
+    const res = await resolver.Feedback.survey(feedback);
+    expect(res).toEqual({ title: 'Self Check' });
+  });
 });
