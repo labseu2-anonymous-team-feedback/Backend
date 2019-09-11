@@ -55,9 +55,9 @@ describe('Feedback Resolver', () => {
     saveFeedback.mockReturnValueOnce(saveFeedbackResponse);
     const args = {
       input: {
+        surveyId: 'kljfc1336d3',
         responses: [
           {
-            surveyId: 'kljfc1336d3',
             questionId: 'ad467a06',
             rating: null,
             comment: 'Why me'

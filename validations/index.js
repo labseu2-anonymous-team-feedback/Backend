@@ -68,8 +68,48 @@ const validatePasswordLength = (parent, args, ctx) => {
   return skip;
 };
 
+const validateFeedback = (parent, { input }, ctx) => {
+  const { surveyId, responses } = input;
+  if (!surveyId) {
+    throw new UserInputError('Survey id must be present', {
+      invalidArgs: 'surveyId'
+    });
+  }
+  for (let i = 0; i < responses.length; i += 1) {
+    if (!responses[i].questionId) {
+      throw new UserInputError('Question id must be present in all responses', {
+        invalidArgs: 'responses'
+      });
+    } else if (
+      (!responses[i].comment && !responses[i].rating) ||
+      (responses[i].comment && responses[i].rating)
+    ) {
+      throw new UserInputError(
+        'Either content or rating must be present in all responses',
+        {
+          invalidArgs: 'responses'
+        }
+      );
+    } else if (
+      responses[i].rating &&
+      (!Number.isInteger(parseInt(responses[i].rating, 10)) ||
+        (parseInt(responses[i].rating, 10) < 1 ||
+          parseInt(responses[i].rating, 10) > 10))
+    ) {
+      throw new UserInputError(
+        'Ratings must be between 1 and 10 in all responses with ratings',
+        {
+          invalidArgs: 'responses'
+        }
+      );
+    }
+  }
+  return skip;
+};
+
 module.exports = {
   validateSurvey,
   validateSignup,
-  validatePasswordLength
+  validatePasswordLength,
+  validateFeedback
 };
