@@ -69,7 +69,7 @@ const validatePasswordLength = (parent, args, ctx) => {
 };
 
 const validateFeedback = (parent, { input }, ctx) => {
-  const { surveyId, userId, responses } = input;
+  const { surveyId, responses } = input;
   if (!surveyId) {
     throw new UserInputError('Survey id must be present', {
       invalidArgs: 'surveyId'
