@@ -4,10 +4,10 @@ const models = require('../database/models');
 
 const SECRET = process.env.SECRET_KEY;
 /**
- * Create JWT
  *
- * @param {*} payload
- * @returns
+ *
+ * @param {*} payload from id and username
+ * @returns token
  */
 const createToken = payload => {
   const token = jwt.sign(payload, SECRET, {
@@ -16,10 +16,10 @@ const createToken = payload => {
   return token;
 };
 /**
- * JWT decode
+ * Decodes user token
  *
  * @param {*} token
- * @returns
+ * @returns decoded token
  */
 const decodeToken = async token => {
   try {
@@ -33,10 +33,10 @@ const decodeToken = async token => {
   }
 };
 /**
- * JWT verify
+ * verify user token
  *
  * @param {*} token
- * @returns
+ * @returns user with specified id in token
  */
 const verifyUserToken = async token => {
   try {

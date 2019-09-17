@@ -3,11 +3,19 @@ const { gql } = require('apollo-server-express');
 const surveyTypes = gql`
   type Query {
     getUserSurveys: [Survey!]!
+    getSurveyDetails(surveyId: String!): SurveyDetails!
+    # getSurveyFeedback(surveyId: String!): [Feedback!]!
   }
   type Survey {
     id: String!
     title: String!
     owner: User!
+    questions: [Question!]!
+  }
+
+  type SurveyDetails {
+    id: String!
+    title: String!
     questions: [Question!]!
   }
 
@@ -19,6 +27,7 @@ const surveyTypes = gql`
     question: String!
     type: String
     survey: Survey!
+    feedbacks: [Feedback!]!
   }
   input SurveyInput {
     """
@@ -38,6 +47,14 @@ const surveyTypes = gql`
     id: String
     question: String
     type: String
+  }
+  type Feedback {
+    id: String
+    userId: String
+    surveyId: String!
+    questionId: String!
+    comment: String
+    rating: String
   }
 
   type SurveyResponse {

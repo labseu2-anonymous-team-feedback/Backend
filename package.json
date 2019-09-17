@@ -8,11 +8,9 @@
     "dev": "nodemon index.js",
     "migrate": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate",
     "seed": "npx sequelize-cli db:seed:undo:all && npx sequelize-cli db:seed:all",
-    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --testTimeout=10000 --forceExit ",
-    "pretest": "cross-env NODE_ENV=test npx sequelize-cli db:migrate:undo:all &&  cross-env NODE_ENV=test npx sequelize-cli db:migrate",
-    "test-seed": "npx sequelize-cli db:seed:undo:all && npx sequelize-cli db:seed:all --env test",
-    "coverage": "npm test && cat ./coverage/lcov.info | coveralls"
-
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --testTimeout=10000 --forceExit",
+    "pretest": "cross-env NODE_ENV=test npx sequelize-cli db:migrate:undo:all && cross-env NODE_ENV=test npx sequelize-cli db:migrate",
+    "coverage": "jest --coverage --detectOpenHandles --testTimeout=10000 && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",

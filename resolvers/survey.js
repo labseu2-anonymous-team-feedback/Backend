@@ -10,6 +10,19 @@ module.exports = {
         const surveys = await Survey.getUserSurveys(user.id);
         return surveys;
       }
+    ),
+    getSurveyDetails: combineResolvers(
+      async (_, { surveyId }, { dataSources: { Survey } }) => {
+        const questions = await Survey.getSurveyDetails(surveyId);
+        return questions;
+      }
+    ),
+    getSurveyFeedback: combineResolvers(
+      isAuthenticated,
+      async (_, { surveyId }, { dataSources: { Survey } }) => {
+        const feedback = await Survey.getSurveyFeedback(surveyId);
+        return feedback;
+      }
     )
   },
 
@@ -33,6 +46,9 @@ module.exports = {
   Question: {
     survey(question) {
       return question.getSurvey();
+    },
+    feedbacks(question) {
+      return question.getFeedbacks();
     }
   }
 };

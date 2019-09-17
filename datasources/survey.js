@@ -35,6 +35,32 @@ class Survey extends DataSource {
     const surveys = this.models.Survey.findAll({ where: { userId } });
     return surveys;
   }
+
+  async getSurveyDetails(surveyId) {
+    const survey = await this.models.Survey.findOne({
+      where: { id: surveyId },
+      include: [
+        {
+          model: this.models.Question,
+          as: 'questions'
+        }
+      ]
+    });
+    return survey;
+  }
+
+  async getSurveyFeedback(surveyId) {
+    const survey = await this.models.Survey.findOne({
+      where: { id: surveyId },
+      include: [
+        {
+          model: this.models.Feedback,
+          as: 'feedback'
+        }
+      ]
+    });
+    return survey.feedback;
+  }
 }
 
 module.exports = Survey;

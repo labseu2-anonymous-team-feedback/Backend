@@ -7,6 +7,7 @@ const resolvers = require('../resolvers');
 const models = require('../database/models');
 const UserAPI = require('../datasources/user');
 const SurveyAPI = require('../datasources/survey');
+const FeedbackAPI = require('../datasources/feedback');
 const { verifyUserToken } = require('../helpers/token');
 require('dotenv').config();
 
@@ -46,12 +47,17 @@ app.get(
   (req, res) => {
     res.redirect(process.env.REDIRECT_URL);
     app.locals.profile = req.user.profile;
+    // console.log('========', app.locals.profile.photos[0].value);
   }
 );
-
+/**
+ * create instance of UserAPI and SurveyAPI
+ *
+ */
 const dataSources = () => ({
   User: new UserAPI(),
-  Survey: new SurveyAPI()
+  Survey: new SurveyAPI(),
+  Feedback: new FeedbackAPI()
 });
 const context = async ({ req }) => {
   const token = (req.headers && req.headers.authorization) || '';
