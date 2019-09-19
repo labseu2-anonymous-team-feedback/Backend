@@ -32,7 +32,10 @@ class Survey extends DataSource {
   }
 
   async getUserSurveys(userId) {
-    const surveys = this.models.Survey.findAll({ where: { userId } });
+    const surveys = this.models.Survey.findAll({
+      where: { userId },
+      order: [['createdAt', 'DESC']]
+    });
     return surveys;
   }
 
