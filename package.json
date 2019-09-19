@@ -49,6 +49,7 @@
     "express": "^4.17.1",
     "graphql": "^14.4.2",
     "graphql-resolvers": "^0.3.3",
+    "graphql-tag": "^2.10.1",
     "helmet": "^3.20.0",
     "jsonwebtoken": "^8.5.1",
     "mailgen": "^2.0.8",
