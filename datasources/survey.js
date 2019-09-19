@@ -41,13 +41,7 @@ class Survey extends DataSource {
 
   async getSurveyDetails(surveyId) {
     const survey = await this.models.Survey.findOne({
-      where: { id: surveyId },
-      include: [
-        {
-          model: this.models.Question,
-          as: 'questions'
-        }
-      ]
+      where: { id: surveyId }
     });
     return survey;
   }

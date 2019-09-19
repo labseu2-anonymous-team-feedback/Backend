@@ -3,7 +3,7 @@ const { gql } = require('apollo-server-express');
 const surveyTypes = gql`
   type Query {
     getUserSurveys: [Survey!]!
-    getSurveyDetails(surveyId: String!): SurveyDetails!
+    getSurveyDetails(surveyId: String!): Survey!
     # getSurveyFeedback(surveyId: String!): [Feedback!]!
   }
   type Survey {
