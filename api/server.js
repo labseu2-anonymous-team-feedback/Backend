@@ -39,18 +39,13 @@ passport.use(
   )
 );
 
-const appUrl =
-  process.env.URL === 'https://stage-atf-fe.herokuapp.com/google'
-    ? process.env.STAGE_URL
-    : process.env.REDIRECT_URL;
-
 app.get(
   '/google',
   passport.authenticate('google', {
     scope: ['profile', 'email']
   }),
   (req, res) => {
-    res.redirect(appUrl);
+    res.redirect(process.env.REDIRECT_URL);
     app.locals.profile = req.user.profile;
     // console.log('========', app.locals.profile.photos[0].value);
   }
