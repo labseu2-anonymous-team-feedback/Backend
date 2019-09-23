@@ -27,7 +27,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.URL || 'http://localhost:4000/google'
+      callbackURL: process.env.URL || 'http://localhost:5000/google'
     },
     (accessToken, refreshToken, profile, done) => {
       done(null, {
@@ -39,13 +39,18 @@ passport.use(
   )
 );
 
+const appUrl =
+  process.env.URL === 'https://stage-atf-fe.herokuapp.com/google'
+    ? process.env.STAGE_URL
+    : process.env.REDIRECT_URL;
+
 app.get(
   '/google',
   passport.authenticate('google', {
     scope: ['profile', 'email']
   }),
   (req, res) => {
-    res.redirect(process.env.REDIRECT_URL);
+    res.redirect(appUrl);
     app.locals.profile = req.user.profile;
     // console.log('========', app.locals.profile.photos[0].value);
   }
