@@ -49,7 +49,39 @@ const isSurveyOwner = async (parent, { surveyId }, { user }) => {
   return skip;
 };
 
+/**
+ *
+ *
+ * @param {*} parent
+ * @param {*} args
+ * @param {*} { user }
+ * @returns
+ */
+const refuseSurveyOwner = async (parent, { input: { surveyId} }, { user }) => {
+  if (!user) {
+    throw new AuthenticationError('Authentication required');
+  }
+   
+  const { id } = user;
+  const survey = await models.Survey.findOne({
+    where: { id: surveyId },
+    include: [
+      {
+        model: models.User,
+        as: 'owner'
+      }
+    ]
+  });
+  if (id === survey.owner.dataValues.id) {
+    throw new AuthenticationError(
+      'You are not allowed to respond to a survey you created'
+    );
+  }
+  return skip;
+};
+
 module.exports = {
   isAuthenticated,
-  isSurveyOwner
+  isSurveyOwner,
+  refuseSurveyOwner
 };
