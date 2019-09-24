@@ -35,14 +35,8 @@ class Feedback extends DataSource {
         userId: feedbackInput.userId,
         surveyId: feedbackInput.surveyId
       }));
-      console.log("\n\n\n\n\n");  
-      console.log("Before", feedbackResponses);  
-      console.log("\n\n\n\n\n");  
       
       const result = await this.models.Feedback.bulkCreate(feedbackResponses);
-      console.log("\n\n\n\n\n");  
-      console.log(result);  
-      console.log("\n\n\n\n\n");  
       return result;
     } else {
       throw new UserInputError('Please provide all required feedback data');
