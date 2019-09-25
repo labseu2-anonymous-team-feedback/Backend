@@ -1,6 +1,6 @@
 const { combineResolvers } = require('graphql-resolvers');
 const { validateFeedback } = require('../validations');
-const { isAuthenticated, isSurveyOwner } = require('../midlewares/auth');
+const { isAuthenticated, refuseSurveyOwner, isSurveyOwner } = require('../midlewares/auth');
 
 module.exports = {
   Query: {
@@ -17,6 +17,7 @@ module.exports = {
   Mutation: {
     saveFeedback: combineResolvers(
       validateFeedback,
+      // refuseSurveyOwner, 
       async (_, feedbackData, { dataSources: { Feedback } }) => {
         const feedback = await Feedback.createFeedback(feedbackData.input);
         if (feedback) {
