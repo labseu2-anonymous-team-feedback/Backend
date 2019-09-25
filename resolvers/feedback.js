@@ -17,7 +17,7 @@ module.exports = {
   Mutation: {
     saveFeedback: combineResolvers(
       validateFeedback,
-      refuseSurveyOwner,
+      // refuseSurveyOwner,
       async (_, feedbackData, { dataSources: { Feedback } }) => {
         const feedback = await Feedback.createFeedback(feedbackData.input);
         if (feedback) {
