@@ -1,6 +1,7 @@
 const { combineResolvers } = require('graphql-resolvers');
 const { AuthenticationError, ApolloError } = require('apollo-server-express');
 const { validateSignup, validatePasswordLength } = require('../validations');
+const { isAuthenticated } = require('../midlewares/auth');
 
 module.exports = {
   Query: {
@@ -60,7 +61,7 @@ module.exports = {
      *         dataSources: { User },
      *         app
      *       }
-     * @returns user deatails
+     * @returns user details
      */
     async authGoogle(
       root,
@@ -154,6 +155,16 @@ module.exports = {
           throw new ApolloError('Password reset failed, please try again');
         }
         return response;
+      }
+    ),
+    updateProfile: combineResolvers(
+      isAuthenticated,
+      async (root, userData, { dataSources: { User }, user }) => {
+        const res = await User.updateProfile(user.id, userData);
+        if (!res) {
+          throw new ApolloError('Profile update failed');
+        }
+        return res;
       }
     )
   }
