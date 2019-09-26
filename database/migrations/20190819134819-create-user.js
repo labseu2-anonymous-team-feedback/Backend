@@ -7,11 +7,11 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
       },
-      firstname: {
+      firstName: {
         type: Sequelize.STRING,
         allowNull: true
       },
-      lastname: {
+      lastName: {
         type: Sequelize.STRING,
         allowNull: true
       },

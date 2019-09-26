@@ -18,18 +18,31 @@ const userTypes = gql`
 
   type Mutation {
     userLogin(email: String!, password: String!): LoginResponse
+
     createAccount(
       username: String!
       email: String!
       password: String!
     ): createAccountResponse
+
     authGoogle: AuthResponse
+
     verifyAccount(token: String!): LoginResponse!
+
     sendResetPasswordEmail(email: String!): SendResetPasswordEmailResponse!
+
     resetPassword(
       newPassword: String!
       token: String!
     ): SendResetPasswordEmailResponse!
+
+    updateProfile(
+      username: String
+      email: String
+      firstName: String
+      lastName: String
+      profileImage: String
+    ): User!
   }
   type SendResetPasswordEmailResponse {
     message: String!
