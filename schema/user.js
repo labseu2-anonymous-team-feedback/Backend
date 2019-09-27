@@ -12,6 +12,7 @@ const userTypes = gql`
     password: String!
     firstName: String
     lastName: String
+    bio: String
     profileImage: String
     surveys: [Survey!]!
   }
@@ -42,6 +43,7 @@ const userTypes = gql`
       firstName: String
       lastName: String
       profileImage: String
+      bio: String
     ): User!
   }
   type SendResetPasswordEmailResponse {

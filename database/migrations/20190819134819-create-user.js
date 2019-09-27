@@ -33,6 +33,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
+      bio: {
+        type: Sequelize.TEXT,
+        allowNull: true
+      },
       verified: {
         type: Sequelize.BOOLEAN,
         defaultValue: false
