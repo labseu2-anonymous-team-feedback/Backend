@@ -57,11 +57,11 @@ const isSurveyOwner = async (parent, { surveyId }, { user }) => {
  * @param {*} { user }
  * @returns
  */
-const refuseSurveyOwner = async (parent, { input: { surveyId} }, { user }) => {
+const refuseSurveyOwner = async (parent, { input: { surveyId } }, { user }) => {
   if (!user) {
     throw new AuthenticationError('Authentication required');
   }
-   
+
   const { id } = user;
   const survey = await models.Survey.findOne({
     where: { id: surveyId },

@@ -134,15 +134,18 @@ class User extends DataSource {
    * @memberof User
    */
   // eslint-disable-next-line class-methods-use-this
-  async sendVerificationMail(user) {
+  async sendVerificationMail(user, newAccount = true) {
     const { id, username, email } = user;
     const token = createToken({ __uuid: id });
     const template = await generateMailTemplate({
       receiverName: username,
-      intro: 'Welcome to Anonymous Team Feedback',
-      text:
-        'Your account is almost done. We only need to verify your email,Click the link below to verify your account',
-      actionBtnText: 'Verify Account',
+      intro: newAccount
+        ? 'Welcome to Anonymous Team Feedback'
+        : 'New Email Verification',
+      text: newAccount
+        ? 'Your account is almost done. We only need to verify your email,Click the link below to verify your account'
+        : 'You recently updated your email, if this is you, kindly click the link below to verify the new email',
+      actionBtnText: newAccount ? 'Verify Account' : 'Verify Email',
       actionBtnLink: `${process.env.CLIENT_URL}/verify_account/${token}`
     });
 
@@ -221,6 +224,22 @@ class User extends DataSource {
     const hashedPassword = await bcrypt.hashSync(newPassword, 10);
     const isUpdated = await user.update({ password: hashedPassword });
     if (isUpdated) return { message: 'Password updated successfully' };
+    return false;
+  }
+
+  async updateProfile(userId, userData) {
+    const user = await this.models.User.findOne({ where: { id: userId } });
+    if (userData.email && userData.email !== user.email) {
+      const updatedUser = await user.update({ verified: false, ...userData });
+      if (updatedUser) {
+        this.sendVerificationMail(updatedUser, false);
+      }
+      return updatedUser;
+    }
+    const updatedUser = await user.update({ ...userData });
+    if (updatedUser) {
+      return updatedUser;
+    }
     return false;
   }
 }

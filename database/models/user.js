@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4
       },
-      firstname: {
+      firstName: {
         type: DataTypes.STRING,
         allowNull: true,
         validate: {
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       },
-      lastname: {
+      lastName: {
         type: DataTypes.STRING,
         allowNull: true,
         validate: {
