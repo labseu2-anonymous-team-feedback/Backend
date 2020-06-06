@@ -38,7 +38,7 @@
   "dependencies": {
     "@sendgrid/mail": "^6.4.0",
     "apollo-datasource": "^0.6.1",
-    "apollo-server-express": "^2.8.1",
+    "apollo-server-express": "^2.14.2",
     "apollo-server-testing": "^2.9.0",
     "auto-bind": "^2.1.0",
     "bcrypt": "^3.0.6",
